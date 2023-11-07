@@ -78,12 +78,12 @@
             </div>
         </nav>
         <div class="container">
-            <form>
+            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros">
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
                     <h4 class="mt-4">Registro Servicio Social</h4>
                     <div class="col-md-6">
-                        <label for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
+                        <label  for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
                         <input type="text" class="form-control" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
                     </div>
                     <div class="col-md-6">
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-6 ">
                         <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
-                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="AM" name="AM">
+                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="AM" name="AM" required>
                     </div>
                 </div>
 
@@ -158,9 +158,9 @@
                         <div class="form-group">
                             <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
                             <div class="input-group">
-                                <input type="text" id="FechaInicio" class="form-control" readonly>
+                                <input type="text" id="FechaInicio" name="FechaInicio" class="form-control" readonly>
                                 <div class="input-group-append">
-                                    <span class="input-group-text Inicio" id="FechaInicioBtn" style="cursor: pointer;">
+                                    <span class="input-group-text Inicio" id="FechaInicioBtn" name="FechaInicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
@@ -172,9 +172,9 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
                             <div class="input-group">
-                                <input type="text" id="FechaFinal" class="form-control" readonly>
+                                <input type="text" id="FechaFinal" name="FechaFinal" class="form-control" readonly>
                                 <div class="input-group-append">
-                                    <span class="input-group-text Fin" id="FechaFinalBtn" style="cursor: pointer;">
+                                    <span class="input-group-text Fin" id="FechaFinalBtn" name="FechaFinal" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
@@ -188,7 +188,7 @@
                         <button type="button" class="btn w-25 btnclr button-row ">Limpiar</button>
                     </div>
                     <div class="col-md-6 text-end">
-                        <button type="button" class="btn w-25 btnclr button-row">Registro</button>
+                        <button type="submit" class="btn w-25 btnclr button-row">Registro</button>
                     </div>
                 </div>
 
