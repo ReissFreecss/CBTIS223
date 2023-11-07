@@ -62,22 +62,23 @@
             <div class="row">
                 <div class="col-md-4 mt-4">
                     <h4>Expedir documentos:</h4>
-                    <h5>Ingresa número de control:</h5>
-                    <input type="text" class="form-control mb-4" id="controlNumber"
-                           placeholder="Número de control">
-                    <h5>Tramite:</h5>
-                    <select id="Selector" class="form-select mb-4">
-                        <option value="Aceptacion">Carta de aceptacion</option>
-                        <option value="Liberacion">Carta de liberacion</option>
-                    </select>
                     <!--Descargar PDF -->
-                    <form asp-action="DescargarPDF" asp-controller="Home">
-                        <button class="btn btn-success" type="submit">Descargar PDF</button>
+                    <form method="post" asp-action="DescargarPDF" asp-controller="PDF">
+                        <h5>Ingresa número de control:</h5>
+                        <input type="text" class="form-control mb-4" name="idEstudiante" placeholder="Número de control">
+                        <h5>Tramite:</h5>
+                        <select id="Selector" class="form-select mb-4">
+                            <option value="Aceptacion">Carta de aceptacion</option>
+                            <option value="Liberacion">Carta de liberacion</option>
+                        </select>
+                        <button class="btn w-25 btnclr button-row" type="submit">Descargar PDF</button>
                     </form>
                 </div>
-                <!--Visor PDF -->
+                <!--Visor PDF  <embed src="@Url.Action("DescargarPDF", "PDF")"+ "?idEstudiante=" + idEstudiante width="100%" height="500" type="application/pdf"/>-->
                 <div class="pdf-container col-md-8">
-                    <iframe id="pdf" width="100%" height="500" frameborder="0"></iframe>
+                    <iframe id="pdf" width="100%" height="500" frameborder="0">
+
+                    </iframe>
                 </div>
             </div>
         </div>
