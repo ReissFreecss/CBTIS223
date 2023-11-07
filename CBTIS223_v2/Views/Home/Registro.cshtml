@@ -1,0 +1,204 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <title>Servicio Social</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- Bootstrap-datepicker CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-k4GT4mMEkCk4OfF5/MF5Lm5wKj5l5T5u5v5C5n5u5O5x5V5B5r5Z5E5O5W5B5V5E5T5u5C5"
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap-datepicker -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- JS -->
+    <script src="~/js/periodo.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/registro.css" />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body class="bg-white">
+    <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+            <a class="navbar-brand" href="#">
+                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadisticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <form>
+                <!--Numero de control y Nombre-->
+                <div class="row mb-3">
+                    <h4 class="mt-4">Registro Servicio Social</h4>
+                    <div class="col-md-6">
+                        <label for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
+                        <input type="text" class="form-control" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Nombre" class="form-label"><strong>Nombre(s) del alumno:</strong> </label>
+                        <input type="text" class="form-control" placeholder="Ej. JUAN CARLOS" id="Nombre" name="Nombre" required>
+                    </div>
+                </div>
+
+                <!--Apellidos-->
+                <div class="row mb-3">
+                    <div class="col-md-6 ">
+                        <label for="AP" class="form-label"><strong>Apellido Paterno del alumno:</strong></label>
+                        <input type="text" class="form-control" placeholder="Ej. PEREZ" id="AP" name="AP" required>
+                    </div>
+                    <div class="col-md-6 ">
+                        <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
+                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="AM" name="AM">
+                    </div>
+                </div>
+
+                <!--CURP y Especialidad-->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="CURP" class="form-label"><strong>CURP:</strong></label>
+                        <input type="text" class="form-control" placeholder="Ej. PEGJ850315HJCRRN07" id="CURP" name="CURP" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="Especialidad" class="form-label"><strong>Especialidad:</strong></label>
+                        <select class="form-select" id="Especialidad" name="Especialidad" required>
+                            <option selected>Selecciona una Especialidad</option>
+                            <option value="PROGRAMACION">PROGRAMACION</option>
+                            <option value="CONSTRUCCION">CONSTRUCCION</option>
+                            <option value="PREPARACION DE ALIEMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
+                            <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRAFICO DIGITAL</option>
+                            <option value="ELECTRICIDAD">ELECTRICIDAD</option>
+                            <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACION DE RECURSOS HUMANOS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--Ciclo Escolar-->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
+                        <select class="form-select" id="Ciclo" name="Ciclo" required>
+                            <option selected>Selecciona el Ciclo Escolar</option>
+                            <option value="2017-2020">2017-2020</option>
+                            <option value="2020-2023">2020-2023</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--Institucion-->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
+                        <select class="form-select" id="Institucion" name="Institucion" required>
+                            <option selected>Selecciona la Institucion</option>
+                            <option value="INSTITUTO TECNOLOGICO DE ZACATEPEC">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
+                        <input type="text" class="form-control" id="Responsable" name="Responsable" readonly required>
+                    </div>
+                </div>
+
+                <!--Periodo-->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
+                            <div class="input-group">
+                                <input type="text" id="FechaInicio" class="form-control" readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text Inicio" id="FechaInicioBtn" style="cursor: pointer;">
+                                        <i class="fas fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
+                            <div class="input-group">
+                                <input type="text" id="FechaFinal" class="form-control" readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text Fin" id="FechaFinalBtn" style="cursor: pointer;">
+                                        <i class="fas fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Botones-->
+                <div class="row mb-3 mb-4">
+                    <div class="col-md-6">
+                        <button type="button" class="btn w-25 btnclr button-row ">Limpiar</button>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="button" class="btn w-25 btnclr button-row">Registro</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <footer>
+            <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
+            <p>Contacto: </p>
+        </footer>
+    </div>
+</body>
+
+</html>

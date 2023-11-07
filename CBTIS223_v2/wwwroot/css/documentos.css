@@ -1,0 +1,66 @@
+.wrapper {
+    position: relative;
+    padding-bottom: 20px; 
+}
+
+footer {
+    background-color: #691C32;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+header {
+    background-color: #691C32 ;
+    color: #ffffff; 
+    height: 80px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+
+.btnclr{
+    color: #ffffff;
+    background-color: #691C32; 
+}
+
+.containerF{
+    margin-top: -10vh;
+}
+
+#pdf {
+    border: 2px solid #ccc; 
+    margin-top: 20px;
+    background-color: #585151;
+}
+
+.navbar-logo {
+    max-width: 50px;
+    margin-left: 10px; 
+}
+
+.navbar-custom {
+    background-color: #691C32 !important; 
+    color: #ffffff; /
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link:hover {
+    background-color: #fff; 
+    color: #000; 
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link {    
+    color: #fff; 
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    color: #333;
+}
