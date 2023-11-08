@@ -7,6 +7,7 @@ using QuestPDF.Helpers;
 
 namespace CBTIS223_v2.Controllers
 {
+//COMENTARIO
     public class ControllerPDF
     {
         public class HomeController : Controller
