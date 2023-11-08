@@ -11,6 +11,7 @@ namespace CBTIS223_v2.Controllers
     {
 
         // comentario xd
+        // comentario xd 2
         public class HomeController : Controller
         {
             private readonly IWebHostEnvironment _host;
