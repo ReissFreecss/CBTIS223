@@ -53,6 +53,24 @@ namespace CBTIS223_v2.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Root")]
+        public IActionResult Institucion()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Root")]
+        public IActionResult Escuela()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Root")]
+        public IActionResult Bitacora()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
