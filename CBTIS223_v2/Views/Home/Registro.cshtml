@@ -11,7 +11,7 @@
 
 <head>
     <title>Servicio Social</title>
-    <!-- jQueryto sss aaaaa-->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap CSS -->
@@ -70,6 +70,24 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadisticas</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Bitacora">Bitacora</a>
+                        }
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>

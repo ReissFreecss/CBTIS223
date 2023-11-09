@@ -1,4 +1,4 @@
-.wrapper {
+﻿.wrapper {
     min-height: 100vh;
     position: relative;
     padding-bottom: 100px; /* Adjust this value to accommodate the footer */
@@ -21,8 +21,8 @@ footer {
 }
 
 header {
-    background-color: #691C32 ;
-    color: #ffffff; 
+    background-color: #691C32;
+    color: #ffffff;
     height: 80px;
     padding: 10px 0;
     text-align: center;
@@ -34,50 +34,60 @@ header {
     background-color: #691C32;
 }
 
-.containerF{
+    .btnclr:hover {
+        background-color: #982646;
+        color: #ffffff;
+    }
+
+.tabclr {
+    color: #ffffff;
+    background-color: #691C32;
+}
+
+.icono {
+    color: #691C32;
+}
+
+.containerF {
     margin-top: -10vh;
 }
 
 #pdf {
-    border: 2px solid #ccc; 
+    border: 2px solid #ccc;
     margin-top: 20px;
     background-color: #585151;
 }
 
 .navbar-logo {
     max-width: 50px;
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 .navbar-custom {
-    background-color: #691C32 !important; 
-    color: #ffffff; /
+    background-color: #691C32 !important;
+    color: #ffffff;
+    /
 }
 
-.navbar-custom .navbar-nav .nav-item .nav-link:hover {
-    background-color: #fff; 
-    color: #000; 
-}
+    .navbar-custom .navbar-nav .nav-item .nav-link:hover {
+        background-color: #fff;
+        color: #000;
+    }
 
-.navbar-custom .navbar-nav .nav-item .nav-link {
-    color: #fff; 
-}
+    .navbar-custom .navbar-nav .nav-item .nav-link {
+        color: #fff;
+    }
 
-.Inicio{
+.Inicio {
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-.Fin{
+.Fin {
     height: 100%;
     display: flex;
     align-items: center;
-}
-
-.btnclr:hover {
-    background-color: #982646; 
-    color: #ffffff; 
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
