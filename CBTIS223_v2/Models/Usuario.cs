@@ -9,6 +9,7 @@ namespace CBTIS223_v2.Models
         public string Nombre { get; set; } = null!;
         public string Correo { get; set; } = null!;
         public string Contraseña { get; set; } = null!;
+        public string token_recovery { get; set; } = null!;
         public string Rol { get; set; } = null!;
     }
 }
