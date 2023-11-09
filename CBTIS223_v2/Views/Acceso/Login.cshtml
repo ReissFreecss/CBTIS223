@@ -3,6 +3,14 @@
     Layout = null;
 }
 
+<div style="color:green">
+    @ViewBag.Message
+</div>
+
+<div style="color:red">
+    @ViewBag.Error
+</div>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -62,6 +70,11 @@
                             <div class="text-center mt-4">
                                 <button type="submit" class="btn w-50 btnclr mx-auto">Iniciar Sesión</button>
                             </div>
+                        </div>
+
+                        
+                        <div>
+                            @Html.ActionLink("¿Has olvidado tu contraseña?","StartRecovery")
                         </div>
                     </form>
                 </div>
