@@ -224,6 +224,7 @@ namespace CBTIS223_v2.Models
                 entity.Property(e => e.token_recovery)
                     .HasMaxLength(255)
                     .HasColumnName("token_recovery");
+                //Token para recuperacion
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(100)
