@@ -43,8 +43,10 @@ namespace CBTIS223_v2.Controllers
                 }
 
                 //Transformo los datos de fecha a string
-                string FechaInicio = servicioSocial.FechaInicioServicio.ToString();
-                string FechaTermino = servicioSocial.FechaTerminoServicio.ToString();
+
+                DateOnly FechaInicio = servicioSocial.FechaInicioServicio;
+                DateOnly FechaTermino = servicioSocial.FechaTerminoServicio;
+
 
                 // Generamos PDf Hoja de liberacion
                 var data = Document.Create(document =>
@@ -217,10 +219,10 @@ namespace CBTIS223_v2.Controllers
                                 txt.Span("\nDurante el periodo comprendido del ")
                                 .FontFamily("Arial").FontSize(12).LetterSpacing(0.02f); ;
 
-                                txt.Span(FechaInicio + " al ")      //Periodo Inicio
+                                txt.Span(( FechaInicio.ToString("dd MMMM"+" Del "+ "yyyy")) + " al ")      //Periodo Inicio
                                 .FontFamily("Arial").FontSize(12).LetterSpacing(0.02f); ;//Modificable
 
-                                txt.Span(FechaTermino)      //Periodo Fin
+                                txt.Span((FechaTermino.ToString("dd MMMM"+" Del "+ "yyyy")))      //Periodo Fin
                                 .FontFamily("Arial").FontSize(12).LetterSpacing(0.02f); ;//Modificable
 
                                 txt.Span(" Consistiendo en: ")      //Texto
