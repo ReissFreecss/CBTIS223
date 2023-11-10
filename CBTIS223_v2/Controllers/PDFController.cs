@@ -44,8 +44,8 @@ namespace CBTIS223_v2.Controllers
 
                 //Transformo los datos de fecha a string
 
-                DateOnly FechaInicio = servicioSocial.FechaInicioServicio;
-                DateOnly FechaTermino = servicioSocial.FechaTerminoServicio;
+                DateTime FechaInicio = servicioSocial.FechaInicioServicio;
+                DateTime FechaTermino = servicioSocial.FechaTerminoServicio;
 
 
                 // Generamos PDf Hoja de liberacion

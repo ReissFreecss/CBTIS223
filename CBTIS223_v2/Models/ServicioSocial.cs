@@ -8,8 +8,8 @@ namespace CBTIS223_v2.Models
     {
         public string EstudianteNc { get; set; } = null!;
 
-        public DateOnly FechaInicioServicio { get; set; }
-        public DateOnly FechaTerminoServicio { get; set; }
+        public DateTime FechaInicioServicio { get; set; }
+        public DateTime FechaTerminoServicio { get; set; }
         public int IdInstiServicio { get; set; }
 
         public virtual EstudiantesServicio EstudianteNcNavigation { get; set; } = null!;
