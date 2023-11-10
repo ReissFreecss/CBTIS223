@@ -114,11 +114,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6 ">
                         <label for="AP" class="form-label"><strong>Apellido Paterno del alumno:</strong></label>
-                        <input type="text" class="form-control" placeholder="Ej. PEREZ" id="AP" name="AP" required>
+                        <input type="text" class="form-control" placeholder="Ej. PEREZ" id="ApellidoPaterno" name="ApellidoPaterno" required>
                     </div>
                     <div class="col-md-6 ">
                         <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
-                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="AM" name="AM" required>
+                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="ApellidoMaterno" name="ApellidoMaterno" required>
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="CURP" class="form-label"><strong>CURP:</strong></label>
-                        <input type="text" class="form-control" placeholder="Ej. PEGJ850315HJCRRN07" id="CURP" name="CURP" required>
+                        <input type="text" class="form-control" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" required>
                     </div>
 
                     <div class="col-md-6">
@@ -159,9 +159,9 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
-                        <select class="form-select" id="Institucion" name="Institucion" required>
+                        <select class="form-select" id="IdInstiServicio" name="IdInstiServicio" required>
                             <option selected>Selecciona la Institucion</option>
-                            <option value="INSTITUTO TECNOLOGICO DE ZACATEPEC">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
+                            <option value="1">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -178,7 +178,7 @@
                             <div class="input-group">
                                 <input type="text" id="FechaInicio" name="FechaInicio" class="form-control" readonly>
                                 <div class="input-group-append">
-                                    <span class="input-group-text Inicio" id="FechaInicioBtn" name="FechaInicio" style="cursor: pointer;">
+                                    <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
@@ -192,7 +192,7 @@
                             <div class="input-group">
                                 <input type="text" id="FechaFinal" name="FechaFinal" class="form-control" readonly>
                                 <div class="input-group-append">
-                                    <span class="input-group-text Fin" id="FechaFinalBtn" name="FechaFinal" style="cursor: pointer;">
+                                    <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
