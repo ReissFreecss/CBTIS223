@@ -297,7 +297,7 @@ namespace CBTIS223_v2.Controllers
                 }).GeneratePdf();
 
                 Stream stream = new MemoryStream(data);
-                return File(stream, "application/pdf", "libSS.pdf");
+                return File(stream, "application/pdf", "Hoja Liberacion " + idEstudiante +".pdf");
             }
             catch (Exception ex)
             {

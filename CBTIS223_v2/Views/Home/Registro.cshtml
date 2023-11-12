@@ -107,11 +107,11 @@
                     <h4 class="mt-4">Registro Servicio Social</h4>
                     <div class="col-md-6">
                         <label  for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
-                        <input type="text" class="form-control" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
+                        <input type="text" class="form-control" pattern="\d{20,25}" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
                     </div>
                     <div class="col-md-6">
                         <label for="Nombre" class="form-label"><strong>Nombre(s) del alumno:</strong> </label>
-                        <input type="text" class="form-control" placeholder="Ej. JUAN CARLOS" id="Nombre" name="Nombre" required>
+                        <input type="text" class="form-control" pattern="[A-Z]{2,50}" placeholder="Ej. JUAN CARLOS" id="Nombre" name="Nombre" oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
 
@@ -119,11 +119,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6 ">
                         <label for="AP" class="form-label"><strong>Apellido Paterno del alumno:</strong></label>
-                        <input type="text" class="form-control" placeholder="Ej. PEREZ" id="ApellidoPaterno" name="ApellidoPaterno" required>
+                        <input type="text" class="form-control" pattern="[A-Z]{2,50}" placeholder="Ej. PEREZ" id="ApellidoPaterno" name="ApellidoPaterno" oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                     <div class="col-md-6 ">
                         <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
-                        <input type="text" class="form-control" placeholder="Ej.GARCIA" id="ApellidoMaterno" name="ApellidoMaterno" required>
+                        <input type="text" class="form-control" pattern="[A-Z]{2,50}" placeholder="Ej.GARCIA" id="ApellidoMaterno" name="ApellidoMaterno" oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
 
@@ -131,13 +131,13 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="CURP" class="form-label"><strong>CURP:</strong></label>
-                        <input type="text" class="form-control" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" required>
+                        <input type="text" class="form-control" pattern="^[A-Z]{4}\d{6}[A-Z]{6}[A-Z0-9]\d$" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="Especialidad" class="form-label"><strong>Especialidad:</strong></label>
                         <select class="form-select" id="Especialidad" name="Especialidad" required>
-                            <option selected>Selecciona una Especialidad</option>
+                            <option disabled selected>Selecciona una Especialidad</option>
                             <option value="PROGRAMACION">PROGRAMACION</option>
                             <option value="CONSTRUCCION">CONSTRUCCION</option>
                             <option value="PREPARACION DE ALIEMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
@@ -153,7 +153,7 @@
                     <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <select class="form-select" id="Ciclo" name="Ciclo" required>
-                            <option selected>Selecciona el Ciclo Escolar</option>
+                            <option disabled selected>Selecciona el Ciclo Escolar</option>
                             <option value="2017-2020">2017-2020</option>
                             <option value="2020-2023">2020-2023</option>
                         </select>
@@ -165,7 +165,7 @@
                     <div class="col-md-6">
                         <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
                         <select class="form-select" id="IdInstiServicio" name="IdInstiServicio" required>
-                            <option selected>Selecciona la Institucion</option>
+                            <option disabled selected>Selecciona la Institucion</option>
                             <option value="1">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
                         </select>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="form-group">
                             <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioServicio" class="form-control">
+                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioServicio" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
@@ -196,7 +196,7 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoServicio" class="form-control">
+                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoServicio" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>

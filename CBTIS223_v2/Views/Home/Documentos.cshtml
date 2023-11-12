@@ -90,7 +90,7 @@
                     <!--Descargar PDF -->
                     <form method="post" asp-action="DescargarPDF" asp-controller="PDF">
                         <h5>Ingresa número de control:</h5>
-                        <input type="text" class="form-control mb-4" name="idEstudiante" placeholder="Número de control">
+                        <input type="text" class="form-control mb-4" name="idEstudiante" pattern="\d{20,25}" placeholder="Ej. 20330051420002">
                         <h5>Tramite:</h5>
                         <select id="Selector" class="form-select mb-4">
                             <option value="Aceptacion">Carta de aceptacion</option>
