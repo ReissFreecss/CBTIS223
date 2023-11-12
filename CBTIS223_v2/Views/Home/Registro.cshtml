@@ -140,7 +140,7 @@
                             <option disabled selected>Selecciona una Especialidad</option>
                             <option value="PROGRAMACION">PROGRAMACION</option>
                             <option value="CONSTRUCCION">CONSTRUCCION</option>
-                            <option value="PREPARACION DE ALIEMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
+                            <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
                             <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRAFICO DIGITAL</option>
                             <option value="ELECTRICIDAD">ELECTRICIDAD</option>
                             <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACION DE RECURSOS HUMANOS</option>
@@ -151,11 +151,20 @@
                 <!--Ciclo Escolar-->
                 <div class="row mb-3">
                     <div class="col-md-6">
+                        /<!--Lectura de actividad que realiza el alumno en su servicio-->
+                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
+                        <input type="text" class="form-control" pattern="[A-Z]{2,200}" id="Actividad_Servicio" name="Actividad_Servicio"
+                        oninput="this.value = this.value.toUpperCase()" required>
+                    </div>
+                    <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <select class="form-select" id="Ciclo" name="Ciclo" required>
                             <option disabled selected>Selecciona el Ciclo Escolar</option>
-                            <option value="2017-2020">2017-2020</option>
+                            <option value="2019-2022">2019-2022</option>
                             <option value="2020-2023">2020-2023</option>
+                            <option value="2021-2024">2021-2024</option>
+                            <option value="2022-2025">2022-2025</option>
+                            <option value="2023-2026">2023-2026</option>
                         </select>
                     </div>
                 </div>
