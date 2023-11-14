@@ -1,5 +1,6 @@
 ﻿using CBTIS223_v2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CBTIS223_v2.Controllers
 {
@@ -23,7 +24,27 @@ namespace CBTIS223_v2.Controllers
         [HttpGet]
         public IActionResult Registro(EstudiantesServicio modeloE)
         {
-            return View();
+            List<TableViewModel> lst = null!;
+            using (Models.cbtis223Context db = new Models.cbtis223Context())
+            {
+                lst = (from d in db.Instituciones
+                       select new TableViewModel
+                       {
+                           Id = d.IdInstitucion,
+                           Name = d.Institucion
+                       }).ToList();
+            }
+            List<SelectListItem> items = lst.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Name.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            ViewBag.items = items;
+            return View("../Home/Registro");
         }
         // OLIIIIIIIIIIaaaaa
         //Metodo que guarda cambios en BD
@@ -38,7 +59,7 @@ namespace CBTIS223_v2.Controllers
             _context.Add(modeloE);
             _context.Add(modeloS);
             await _context.SaveChangesAsync();
-            return View("../Home/Registro");
+            return View("../Home/Documentos");
         }
     }
 }

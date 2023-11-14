@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity <!-- Framework para la autenticacion de usuarios -->
-
+@model Institucione
 @{
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
     Layout = null;
 }
 
@@ -66,7 +67,7 @@
                     <li class="nav-item">
                         @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
+                            <a class="nav-link" asp-area="" asp-controller="Resgistros asp-action="Registro">Servicio Social</a>
                         }
                     </li>
                     <li class="nav-item">
@@ -153,7 +154,7 @@
                     <div class="col-md-6">
                         /<!--Lectura de actividad que realiza el alumno en su servicio-->
                         <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
-                        <input type="text" class="form-control" pattern="[A-Z]{2,200}" id="Actividad_Servicio" name="Actividad_Servicio"
+                        <input type="text" class="form-control" id="Actividad_Servicio" name="Actividad_Servicio"
                         oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                     <div class="col-md-6">
@@ -172,11 +173,7 @@
                 <!--Institucion-->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
-                        <select class="form-select" id="IdInstiServicio" name="IdInstiServicio" required>
-                            <option disabled selected>Selecciona la Institucion</option>
-                            <option value="1">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
-                        </select>
+                        @Html.DropDownList("IdInstiServicio",items,"Seleccion la Institucion",new {@class="form-select"})
                     </div>
                     <div class="col-md-6">
                         <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
