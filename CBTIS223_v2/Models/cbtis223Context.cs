@@ -26,7 +26,11 @@ namespace CBTIS223_v2.Models
         public virtual DbSet<PracticasProfesionale> PracticasProfesionales { get; set; } = null!;
         public virtual DbSet<ServicioSocial> ServicioSocials { get; set; } = null!;
         public virtual DbSet<Usuario> Usuario { get; set; } = null!;
-
+        
+        public async Task<IList<Institucione>> GetInstituciones() {
+            IList<Institucione> instituciones = await Instituciones.ToListAsync();
+            return instituciones;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

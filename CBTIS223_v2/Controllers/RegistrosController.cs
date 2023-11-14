@@ -21,7 +21,7 @@ namespace CBTIS223_v2.Controllers
             _logger = (ILogger<RegistrosController>?)logger;
             _context = context;
         }
-        [HttpGet]
+        [HttpGet("../Home/Registro")]
         public IActionResult Registro(EstudiantesServicio modeloE)
         {
             List<TableViewModel> lst = null!;
@@ -45,6 +45,33 @@ namespace CBTIS223_v2.Controllers
             });
             ViewBag.items = items;
             return View("../Home/Registro");
+        }
+
+
+        [HttpGet("../Home/Registro2")]
+        public IActionResult Registro2(EstudiantesServicio modeloE)
+        {
+            List<TableViewModel> lst = null!;
+            using (Models.cbtis223Context db = new Models.cbtis223Context())
+            {
+                lst = (from d in db.Instituciones
+                       select new TableViewModel
+                       {
+                           Id = d.IdInstitucion,
+                           Name = d.Institucion
+                       }).ToList();
+            }
+            List<SelectListItem> items = lst.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Name.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            ViewBag.items = items;
+            return View("../Home/Registro2");
         }
 
         [HttpPost]

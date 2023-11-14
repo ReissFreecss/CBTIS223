@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CBTIS223_v2.Models
+@using CBTIS223_v2.Controllers;
+
+@{
+    ViewData["Title"] = "Institucion";
+    Layout = null;
+    cbtis223Context ct = new cbtis223Context();
+    IList<Institucione> instituciones = await ct.GetInstituciones();
+    var modelo = ViewData["modelo"] as Institucione;
+}
+
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <title>CRUD Institución</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/institucion.css" asp-append-version="true" />
+
+    <!-- Font Awesome CSS -->
+    <script src="https://kit.fontawesome.com/1ca77c727c.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="bg-white">
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <!-- Left Column: User Creation -->
+                <div class="col-md-4">
+                    <form method="post" asp-action="Editar" asp-controller="EditarIns">
+                        <h4 class="mt-4">Editar Institucion</h4>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>ID:</strong></label>
+                            <input class="form-control" asp-for="@modelo.IdInstitucion" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
+                            <input type="text" class="form-control" asp-for="@modelo.Institucion" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="Tipo" class="form-label"><strong>Tipo:</strong></label>
+                                <select class="form-select" id="TipoInstitucion" name="TipoInstitucion" required>
+                                    <option selected>Selecciona el tipo de institucion</option>
+                                    <option value="Publica">Publica</option>
+                                    <option value="Privada">Privada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
+                            <input type="text" class="form-control" id="Supervisor" name="Supervisor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
+                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" required>
+                        </div>
+                        <div class="row mb-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="button-row text-md-end text-center">
+                                    <button type="submit" class="btn w-75 btnclr">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <footer>
+                <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
+                <p>Contacto: </p>
+            </footer>
+        </div>
+</body>
+
+</html>

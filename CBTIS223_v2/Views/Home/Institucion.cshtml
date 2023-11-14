@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model List<Institucione>
-
+@using CBTIS223_v2.Models
 @{
     ViewData["Title"] = "Institucion";
     Layout = null;
+    cbtis223Context ct = new cbtis223Context();
+    IList<Institucione> instituciones = await ct.GetInstituciones();
 }
 
 <!DOCTYPE HTML>
@@ -150,7 +151,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @* @foreach (var item in Model)
+                            @foreach (var item in instituciones)
                             {
                                 <tr>
                                     <td>@item.IdInstitucion</td>
@@ -159,11 +160,11 @@
                                     <td>@item.Supervisor</td>
                                     <td>@item.UbicacionInstitucion</td>
                                     <td>
-                                        <a asp-action="Editar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-IdInstitucion="@item.IdInstitucion">Editar</a>
-                                        <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-IdInstitucion="@item.IdInstitucion">Eliminar</a>
+                                        <a asp-action="Editar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Editar</a>
+                                        <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Eliminar</a>
                                     </td> 
                                 </tr>
-                            }*@
+                            }
                         </tbody>
                     </table>
                 </div>
