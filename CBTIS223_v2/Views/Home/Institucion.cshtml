@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@model List<Institucione>
 
 @{
+    ViewData["Title"] = "Institucion";
     Layout = null;
 }
 
@@ -95,11 +97,11 @@
             <div class="row">
                 <!-- Left Column: User Creation -->
                 <div class="col-md-4">
-                    <form>
+                    <form method="post" asp-action="InsertarInstitucion" asp-controller="Instituciones">
                         <h4 class="mt-4">Institucion CRUD</h4>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>ID:</strong></label>
-                            <input type="number" class="form-control" id="ID" name="ID" required>
+                            <input type="number" class="form-control" id="IdInstitucion" name="IdInstitucion" required>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
@@ -108,7 +110,7 @@
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label for="Tipo" class="form-label"><strong>Tipo:</strong></label>
-                                <select class="form-select" id="Tipo" name="Tipo" required>
+                                <select class="form-select" id="TipoInstitucion" name="TipoInstitucion" required>
                                     <option selected>Selecciona el tipo de institucion</option>
                                     <option value="Publica">Publica</option>
                                     <option value="Privada">Privada</option>
@@ -117,21 +119,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
-                            <input type="text" class="form-control" id="Responsable" name="Responsable" required>
+                            <input type="text" class="form-control" id="Supervisor" name="Supervisor" required>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
-                            <input type="text" class="form-control" id="Ubicacion" name="Ubicacion" required>
+                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
-                                <div class="button-row text-md-start text-center">
-                                    <button type="button" class="btn w-75 btnclr">Limpiar</button>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="button-row text-md-end text-center">
-                                    <button type="button" class="btn w-75 btnclr">Crear</button>
+                                    <button type="submit" class="btn w-75 btnclr">Crear</button>
                                 </div>
                             </div>
                         </div>
@@ -149,21 +146,24 @@
                                 <th>Tipo</th>
                                 <th>Responsable</th>
                                 <th>Ubicacion</th>
-                                <th></th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Institucion 1</td>
-                                <td>Publica</td>
-                                <td>Responsable 1</td>
-                                <td>Zacatepec de Hidalgo</td>
-                                <td>
-                                    <a href=""><i class="icono fas fa-pen-to-square fa-xl"></i></a>
-                                    <a href=""><i class="icono fas fa-trash fa-xl"></i></a>
-                                </td>
-                            </tr>
+                            @* @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.IdInstitucion</td>
+                                    <td>@item.Institucion</td>
+                                    <td>@item.TipoInstitucion</td>
+                                    <td>@item.Supervisor</td>
+                                    <td>@item.UbicacionInstitucion</td>
+                                    <td>
+                                        <a asp-action="Editar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-IdInstitucion="@item.IdInstitucion">Editar</a>
+                                        <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-IdInstitucion="@item.IdInstitucion">Eliminar</a>
+                                    </td> 
+                                </tr>
+                            }*@
                         </tbody>
                     </table>
                 </div>

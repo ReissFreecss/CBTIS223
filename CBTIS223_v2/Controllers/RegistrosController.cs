@@ -25,8 +25,7 @@ namespace CBTIS223_v2.Controllers
         {
             return View();
         }
-        // OLIIIIIIIIIIaaaaa
-        //Metodo que guarda cambios en BD
+
         [HttpPost]
         public async Task<IActionResult> InsertarRegistros(
             [Bind("NumeroControl", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Curp", "Especialidad")] EstudiantesServicio modeloE,
