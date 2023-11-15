@@ -24,26 +24,31 @@ namespace CBTIS223_v2.Controllers
         [HttpGet]
         public IActionResult Registro(EstudiantesServicio modeloE)
         {
-            List<TableViewModel> lst = null!;
+            List<Institucione> lst = null!;
             using (Models.cbtis223Context db = new Models.cbtis223Context())
             {
                 lst = (from d in db.Instituciones
-                       select new TableViewModel
+                       where d.TipoInstitucion == "Publica"
+                       select new Institucione
                        {
-                           Id = d.IdInstitucion,
-                           Name = d.Institucion,
-                           Tipo = d.TipoInstitucion
+                           IdInstitucion = d.IdInstitucion,
+                           Institucion = d.Institucion,
+                           TipoInstitucion = d.TipoInstitucion,
+                           Supervisor = d.Supervisor
+
                        }).ToList();
             }
             List<SelectListItem> items = lst.ConvertAll(d =>
             {
                 return new SelectListItem()
                 {
-                    Text = d.Name.ToString()+d.Tipo.ToString(),
-                    Value = d.Id.ToString(),
-                    Selected = false
+                    Text = d.Institucion,
+                    Value = d.IdInstitucion.ToString(),
+                    Selected = true
                 };
             });
+           
+
             ViewBag.items = items;
             return View("../Home/Registro");
         }
@@ -61,5 +66,6 @@ namespace CBTIS223_v2.Controllers
             await _context.SaveChangesAsync();
             return View("../Home/Documentos");
         }
+
+        }
     }
-}

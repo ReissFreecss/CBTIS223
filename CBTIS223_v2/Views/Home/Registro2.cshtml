@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
 @{
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
     Layout = null;
 }
 
@@ -66,7 +67,7 @@
                     <li class="nav-item">
                         @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
+                            <a class="nav-link" asp-area="" asp-controller="Registros" asp-action="Registro">Servicio Social</a>
                         }
                     </li>
                     <li class="nav-item">
@@ -100,7 +101,7 @@
             </div>
         </nav>
         <div class="container">
-            <form>
+            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros">
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
                     <h4 class="mt-4">Registro Practicas Profesionales</h4>
@@ -134,7 +135,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="CURP" class="form-label"><strong>Especialidad:</strong></label>
+                        <label for="ESPECIALIDAD" class="form-label"><strong>Especialidad:</strong></label>
                         <input type="text" class="form-control" id="Especialidad" name="Especialidad" readonly required>
                     </div>
                 </div>
@@ -145,8 +146,11 @@
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <select class="form-select" id="Ciclo" name="Ciclo" required>
                             <option selected>Selecciona el Ciclo Escolar</option>
-                            <option value="2017-2020">2017-2020</option>
+                            <option value="2019-2022">2019-2022</option>
                             <option value="2020-2023">2020-2023</option>
+                            <option value="2021-2024">2021-2024</option>
+                            <option value="2022-2025">2022-2025</option>
+                            <option value="2023-2026">2023-2026</option>
                         </select>
                     </div>
                 </div>
@@ -154,15 +158,14 @@
                 <!--Institucion-->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
-                        <select class="form-select" id="Institucion" name="Institucion" required>
-                            <option selected>Selecciona la Institucion</option>
-                            <option value="INSTITUTO TECNOLOGICO DE ZACATEPEC">INSTITUTO TECNOLOGICO DE ZACATEPEC</option>
-                        </select>
+                        <!-- Seleccionar institucion -->
+
                     </div>
                     <div class="col-md-6">
-                        <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
-                        <input type="text" class="form-control" id="Responsable" name="Responsable" readonly required>
+                        <!--Lectura de actividad que realiza el alumno en su servicio-->
+                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
+                        <input type="text" class="form-control" id="Actividad_Servicio" name="Actividad_Servicio"
+                               oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
 
@@ -172,12 +175,13 @@
                         <div class="form-group">
                             <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
                             <div class="input-group">
-                                <input type="text" id="FechaInicio" class="form-control" readonly>
-                                <div class="input-group-append">
-                                    <span class="input-group-text Inicio" id="FechaInicioBtn" style="cursor: pointer;">
+                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioServicio" class="form-control" required>
+                                <!--<div class="input-group-append">
+                                    <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -186,16 +190,29 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
                             <div class="input-group">
-                                <input type="text" id="FechaFinal" class="form-control" readonly>
-                                <div class="input-group-append">
-                                    <span class="input-group-text Fin" id="FechaFinalBtn" style="cursor: pointer;">
+                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoServicio" class="form-control" required>
+                                <!--<div class="input-group-append">
+                                    <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                 </div>
+                                -->
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+                <script>
+                    const input = document.getElementById('FechaInicio');
+                    input.addEventListener('change', () => {
+                        console.log(input.value);
+                    });
+                    const input2 = document.getElementById('FechaFinal');
+                    input2.addEventListener('change', () => {
+                        console.log(input2.value);
+                    });
+                </script>
                 <!--Botones-->
                 <div class="row mb-3 mb-4">
                     <div class="col-md-6">

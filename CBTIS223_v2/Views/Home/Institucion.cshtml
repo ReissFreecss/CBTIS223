@@ -55,13 +55,13 @@
                         <!-- Oculta el boton para cualquier rol fuera de esta lista -->
                         @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
+                            <a class="nav-link" asp-area="" asp-controller="Registro2" asp-action="Registro2">Practicas Profesionales</a>
                         }
                     </li>
                     <li class="nav-item">
                         @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
+                            <a class="nav-link" asp-area="" asp-controller="Registros" asp-action="Registro">Servicio Social</a>
                         }
                     </li>
                     <li class="nav-item">
@@ -73,7 +73,7 @@
                     <li class="nav-item">
                         @if (User.IsInRole("Root"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
+                            <a class="nav-link" asp-area="" asp-controller="Instituciones" asp-action="Institucion">Instituciones</a>
                         }
                     </li>
                     <li class="nav-item">

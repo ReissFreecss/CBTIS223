@@ -3,6 +3,7 @@
 @{
     List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
     Layout = null;
+    
 }
 
 <!DOCTYPE HTML>
@@ -67,7 +68,7 @@
                     <li class="nav-item">
                         @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Resgistros asp-action="Registro">Servicio Social</a>
+                            <a class="nav-link" asp-area="" asp-controller="Registros" asp-action="Registro">Servicio Social</a>
                         }
                     </li>
                     <li class="nav-item">
@@ -151,12 +152,7 @@
 
                 <!--Ciclo Escolar-->
                 <div class="row mb-3">
-                    <div class="col-md-6">
-                        /<!--Lectura de actividad que realiza el alumno en su servicio-->
-                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
-                        <input type="text" class="form-control" id="Actividad_Servicio" name="Actividad_Servicio"
-                        oninput="this.value = this.value.toUpperCase()" required>
-                    </div>
+                    
                     <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <select class="form-select" id="Ciclo" name="Ciclo" required>
@@ -172,12 +168,15 @@
 
                 <!--Institucion-->
                 <div class="row mb-3">
-                    <div class="col-md-6">
-                        @Html.DropDownList("IdInstiServicio",items,"Seleccion la Institucion",new {@class="form-select"})
+                    <div class="col-md-6"> 
+                        <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
+                        @Html.DropDownList("IdInstiServicio",items,"",new {@class="form-select"})
                     </div>
                     <div class="col-md-6">
-                        <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
-                        <input type="text" class="form-control" id="Responsable" name="Responsable" readonly required>
+                        <!--Lectura de actividad que realiza el alumno en su servicio-->
+                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
+                        <input type="text" class="form-control" id="Actividad_Servicio" name="Actividad_Servicio"
+                               oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
 
@@ -223,12 +222,12 @@
                     input2.addEventListener('change', () => {
                         console.log(input2.value);
                     });
-                </script>  
-
-                <!--Botones Limpiar y Registrar-->
+                </script>
+           
+               <!--Botones Limpiar y Registrar-->
                 <div class="row mb-3 mb-4">
                     <div class="col-md-6">
-                        <button type="button" class="btn w-25 btnclr button-row ">Limpiar</button>
+                        <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
                     </div>
                     <div class="col-md-6 text-end">
                         <button type="submit" class="btn w-25 btnclr button-row">Registro</button>
