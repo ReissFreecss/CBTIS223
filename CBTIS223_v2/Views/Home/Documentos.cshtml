@@ -89,13 +89,23 @@
                     <h4>Expedir documentos:</h4>
                     <!--Descargar PDF -->
                     <form method="post" asp-action="DescargarPDF" asp-controller="PDF">
+
                         <h5>Ingresa número de control:</h5>
                         <input type="text" class="form-control mb-4" name="idEstudiante" pattern="\d{14}" placeholder="Ej. 20330051420002" required>
+                        <h5>Tipo:</h5>
+                        <select id="Selector" name="Selector" class="form-select mb-4">
+                            <option value="S">Servicio Social</option>
+                            <option value="P">Prácticas Profesional</option>
+                        </select>
                         <h5>Tramite:</h5>
                         <select id="Selector" name="Selector" class="form-select mb-4">
                             <option value="1">Carta de aceptacion</option>
                             <option value="2">Carta de liberacion</option>
                         </select>
+
+                        <h5>No. de Constancia: </h5>
+                        <input type="text" class="form-control mb-4" name="noConstancia" placeholder="(1-99)" required>
+
                         <button class="btn w-25 btnclr button-row" type="submit">Descargar PDF</button>
                     </form>
                 </div>

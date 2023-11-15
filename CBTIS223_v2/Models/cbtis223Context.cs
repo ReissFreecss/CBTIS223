@@ -197,6 +197,8 @@ namespace CBTIS223_v2.Models
                 entity.Property(e => e.FechaTerminoServicio).HasColumnName("fecha_termino_servicio");
 
                 entity.Property(e => e.IdInstiServicio).HasColumnName("id_insti_servicio");
+                entity.Property(e => e.actividad_servicio).HasColumnName("actividad_servicio");
+
 
                 entity.HasOne(d => d.EstudianteNcNavigation)
                     .WithOne(p => p.ServicioSocial)
