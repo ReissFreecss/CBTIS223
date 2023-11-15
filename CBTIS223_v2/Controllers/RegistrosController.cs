@@ -56,7 +56,7 @@ namespace CBTIS223_v2.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertarRegistros(
             [Bind("NumeroControl", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Curp", "Especialidad")] EstudiantesServicio modeloE,
-            [Bind("EstudianteNc", "FechaInicioServicio", "FechaTerminoServicio", "IdInstiServicio")] ServicioSocial modeloS)
+            [Bind("EstudianteNc", "FechaInicioServicio", "FechaTerminoServicio", "IdInstiServicio","actividad_servicio")] ServicioSocial modeloS)
         {
             modeloS.EstudianteNc = modeloE.NumeroControl;
             _logger.LogInformation(modeloE.NumeroControl+" "+modeloE.Nombre+" "+modeloE.ApellidoPaterno+" *"+modeloE.ApellidoMaterno);
