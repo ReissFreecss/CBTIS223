@@ -8,6 +8,7 @@ namespace CBTIS223_v2.Models
         public string EstudianteNc { get; set; } = null!;
         public DateTime FechaInicioPracticas { get; set; }
         public DateTime FechaTerminoPracticas { get; set; }
+        public string actividad_practicas { get; set; }
         public int IdInstiPracticas { get; set; }
 
         public virtual EstudiantesPractica EstudianteNcNavigation { get; set; } = null!;

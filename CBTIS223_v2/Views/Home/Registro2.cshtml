@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
+@model Institucione
 @{
     List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
     Layout = null;
@@ -20,9 +20,9 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
-    <!-- Bootstrap-datepicker CSS -->
+    <!-- Bootstrap-datepicker CSS 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-
+    -->
     <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
@@ -31,8 +31,8 @@
     <!-- Bootstrap-datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- JS -->
-    <script src="~/js/periodo.js"></script>
+    <!-- JS 
+    <script src="~/js/periodo.js"></script> -->
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="~/css/registro.css" />
@@ -101,7 +101,7 @@
             </div>
         </nav>
         <div class="container">
-            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros">
+            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros2">
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
                     <h4 class="mt-4">Registro Practicas Profesionales</h4>
@@ -155,6 +155,15 @@
                     </div>
                 </div>
 
+                <!--ID instituciones-->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
+                         @Html.DropDownList("IdInstiPracticas",items,"",new {@class="form-select"})
+                    </div>
+                </div>
+
+
                 <!--Institucion-->
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -164,7 +173,7 @@
                     <div class="col-md-6">
                         <!--Lectura de actividad que realiza el alumno en su servicio-->
                         <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
-                        <input type="text" class="form-control" id="Actividad_Servicio" name="Actividad_Servicio"
+                        <input type="text" class="form-control" id="actividad_practicas" name="actividad_practicas"
                                oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
@@ -175,7 +184,7 @@
                         <div class="form-group">
                             <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioServicio" class="form-control" required>
+                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioPracticas" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
@@ -190,7 +199,7 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoServicio" class="form-control" required>
+                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoPracticas" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
@@ -215,10 +224,10 @@
                 <!--Botones-->
                 <div class="row mb-3 mb-4">
                     <div class="col-md-6">
-                        <button type="button" class="btn w-25 btnclr button-row ">Limpiar</button>
+                        <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
                     </div>
                     <div class="col-md-6 text-end">
-                        <button type="button" class="btn w-25 btnclr button-row">Registro</button>
+                        <button type="submit" class="btn w-25 btnclr button-row">Registro</button>
                     </div>
                 </div>
 
