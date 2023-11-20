@@ -98,12 +98,6 @@
                         }
                     </li>
                     <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Bitacora">Bitacora</a>
-                        }
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
                     </li>
                 </ul>
