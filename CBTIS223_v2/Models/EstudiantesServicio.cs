@@ -17,6 +17,7 @@ namespace CBTIS223_v2.Models
         public string ApellidoMaterno { get; set; }
         public string Curp { get; set; } = null!;
         public string Especialidad { get; set; } = null!;
+        public string Ciclo { get; set; } = null!;
 
         public virtual EstudiantesPractica? EstudiantesPractica { get; set; }
         public virtual ServicioSocial? ServicioSocial { get; set; }

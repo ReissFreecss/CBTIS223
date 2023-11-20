@@ -21,50 +21,28 @@ namespace CBTIS223_v2.Controllers
             _logger = (ILogger<RegistrosController>?)logger;
             _context = context;
         }
-        [HttpGet]
-        public IActionResult Registro(EstudiantesServicio modeloE)
-        {
-            List<Institucione> lst = null!;
-            using (Models.cbtis223Context db = new Models.cbtis223Context())
-            {
-                lst = (from d in db.Instituciones
-                       where d.TipoInstitucion == "Publica"
-                       select new Institucione
-                       {
-                           IdInstitucion = d.IdInstitucion,
-                           Institucion = d.Institucion,
-                           TipoInstitucion = d.TipoInstitucion,
-                           Supervisor = d.Supervisor
 
-                       }).ToList();
-            }
-            List<SelectListItem> items = lst.ConvertAll(d =>
-            {
-                return new SelectListItem()
-                {
-                    Text = d.Institucion,
-                    Value = d.IdInstitucion.ToString(),
-                    Selected = true
-                };
-            });
-           
-
-            ViewBag.items = items;
-            return View("../Home/Registro");
-        }
 
         [HttpPost]
         public async Task<IActionResult> InsertarRegistros(
-            [Bind("NumeroControl", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Curp", "Especialidad")] EstudiantesServicio modeloE,
+            [Bind("NumeroControl", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Curp", "Especialidad","Ciclo")] EstudiantesServicio modeloE,
             [Bind("EstudianteNc", "FechaInicioServicio", "FechaTerminoServicio", "actividad_servicio","IdInstiServicio")] ServicioSocial modeloS)
         {
             modeloS.EstudianteNc = modeloE.NumeroControl;
             _logger.LogInformation(modeloE.NumeroControl+" "+modeloE.Nombre+" "+modeloE.ApellidoPaterno+" *"+modeloE.ApellidoMaterno);
             _logger.LogInformation(modeloS.EstudianteNc+" "+modeloS.FechaInicioServicio+" "+modeloS.FechaTerminoServicio+modeloS.actividad_servicio+" *"+modeloS.IdInstiServicio);
-            _context.Add(modeloE);
-            _context.Add(modeloS);
-            await _context.SaveChangesAsync();
-            return View("../Home/Documentos");
+            try
+            {
+                _context.Add(modeloE);
+                _context.Add(modeloS);
+                await _context.SaveChangesAsync();
+                ViewBag.Succesful = "Alumno registrado con exito";
+                return View("../Home/Registro");
+            }catch (Exception ex)
+            {
+                ViewBag.Error="El alumno ya se encuentra registrado";
+                return View("../Home/Registro");
+            }
         }
 
         }

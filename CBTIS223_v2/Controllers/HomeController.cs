@@ -7,6 +7,7 @@ using QuestPDF.Fluent;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SkiaSharp;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CBTIS223_v2.Controllers
 {
@@ -44,6 +45,7 @@ namespace CBTIS223_v2.Controllers
         [Authorize(Roles = "Root, jefeEsc, jefeDep, ofServ")]
         public IActionResult Registro()
         {
+
             return View();
         }
 

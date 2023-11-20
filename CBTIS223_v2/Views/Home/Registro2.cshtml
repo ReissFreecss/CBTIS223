@@ -5,6 +5,15 @@
     Layout = null;
 }
 
+<div style="color:red">
+    <!-- Muestra un mensaje de error en color rojo -->
+    <strong>@ViewBag.Error</strong>
+</div>
+<div style="color:green">
+    <!-- Muestra un mensaje de exito en color verde -->
+    <strong>@ViewBag.Succesful</strong>
+</div>
+
 <!DOCTYPE HTML>
 <html>
 <meta charset="utf-8">
@@ -67,7 +76,7 @@
                     <li class="nav-item">
                         @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
                         {
-                            <a class="nav-link" asp-area="" asp-controller="Registros" asp-action="Registro">Servicio Social</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
                         }
                     </li>
                     <li class="nav-item">
@@ -101,7 +110,7 @@
             </div>
         </nav>
         <div class="container">
-            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros2">
+            <form method="post" asp-action="obtenerDatos" asp-controller="Registros2">
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
                     <h4 class="mt-4">Registro Practicas Profesionales</h4>
@@ -109,125 +118,13 @@
                         <label for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
                         <input type="text" class="form-control" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
                     </div>
-                    <div class="col-md-6">
-                        <label for="Nombre" class="form-label"><strong>Nombre(s) del alumno:</strong> </label>
-                        <input type="text" class="form-control" id="Nombre" name="Nombre" readonly required>
-                    </div>
-                </div>
-
-                <!--Apellidos-->
-                <div class="row mb-3">
-                    <div class="col-md-6 ">
-                        <label for="AP" class="form-label"><strong>Apellido Paterno del alumno:</strong></label>
-                        <input type="text" class="form-control" id="AP" name="AP" readonly required>
-                    </div>
-                    <div class="col-md-6 ">
-                        <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
-                        <input type="text" class="form-control" id="AM" name="AM" readonly>
-                    </div>
-                </div>
-
-                <!--CURP y Especialidad-->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="CURP" class="form-label"><strong>CURP:</strong></label>
-                        <input type="text" class="form-control" id="CURP" name="CURP" readonly required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="ESPECIALIDAD" class="form-label"><strong>Especialidad:</strong></label>
-                        <input type="text" class="form-control" id="Especialidad" name="Especialidad" readonly required>
-                    </div>
-                </div>
-
-                <!--Ciclo Escolar-->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
-                        <select class="form-select" id="Ciclo" name="Ciclo" required>
-                            <option selected>Selecciona el Ciclo Escolar</option>
-                            <option value="2019-2022">2019-2022</option>
-                            <option value="2020-2023">2020-2023</option>
-                            <option value="2021-2024">2021-2024</option>
-                            <option value="2022-2025">2022-2025</option>
-                            <option value="2023-2026">2023-2026</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!--ID instituciones-->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
-                         @Html.DropDownList("IdInstiPracticas",items,"",new {@class="form-select"})
-                    </div>
-                </div>
-
-
-                <!--Institucion-->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <!-- Seleccionar institucion -->
-
-                    </div>
-                    <div class="col-md-6">
-                        <!--Lectura de actividad que realiza el alumno en su servicio-->
-                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
-                        <input type="text" class="form-control" id="actividad_practicas" name="actividad_practicas"
-                               oninput="this.value = this.value.toUpperCase()" required>
-                    </div>
-                </div>
-
-                <!--Periodo-->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
-                            <div class="input-group">
-                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioPracticas" class="form-control" required>
-                                <!--<div class="input-group-append">
-                                    <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
-                                        <i class="fas fa-calendar"></i>
-                                    </span>
-                                </div>
-                                -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
-                            <div class="input-group">
-                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoPracticas" class="form-control" required>
-                                <!--<div class="input-group-append">
-                                    <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
-                                        <i class="fas fa-calendar"></i>
-                                    </span>
-                                </div>
-                                -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    const input = document.getElementById('FechaInicio');
-                    input.addEventListener('change', () => {
-                        console.log(input.value);
-                    });
-                    const input2 = document.getElementById('FechaFinal');
-                    input2.addEventListener('change', () => {
-                        console.log(input2.value);
-                    });
-                </script>
                 <!--Botones-->
                 <div class="row mb-3 mb-4">
                     <div class="col-md-6">
                         <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
                     </div>
                     <div class="col-md-6 text-end">
-                        <button type="submit" class="btn w-25 btnclr button-row">Registro</button>
+                        <button type="submit" class="btn w-25 btnclr button-row">Buscar Alumno</button>
                     </div>
                 </div>
 
