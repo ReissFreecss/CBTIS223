@@ -23,8 +23,7 @@ namespace CBTIS223_v2.Controllers
             _context = context;
         }
         
-        [HttpGet]
-        public IActionResult Registro2(EstudiantesPractica modeloEP)
+        public async Task<IActionResult> obtenerDatos(string NumeroControl)
         {
             List<Institucione> lst = null!;
             using (Models.cbtis223Context db = new Models.cbtis223Context())
@@ -49,10 +48,19 @@ namespace CBTIS223_v2.Controllers
                     Selected = true
                 };
             });
-
+            cbtis223Context ct = new cbtis223Context();
+            IList<EstudiantesServicio> estudiantes = await ct.GetEstudiantes();
+            EstudiantesServicio estudiante = estudiantes.FirstOrDefault(x => x.NumeroControl == NumeroControl);
+            if (estudiante == null)
+            {
+                ViewBag.Error = "El alumno no ha realizado el servicio social";
+                return View("../Home/Registro2");
+            }
 
             ViewBag.items = items;
-            return View("../Home/Registro2");
+            ViewBag.Estudiante = estudiante;
+            return View("../Home/Registro2Insercion");
+
         }
 
         [HttpPost]
@@ -66,10 +74,18 @@ namespace CBTIS223_v2.Controllers
                 modeloP.EstudianteNc = modeloES.NumeroControl;
                 _logger.LogInformation(modeloES.NumeroControl);
                 _logger.LogInformation(modeloP.EstudianteNc+" "+modeloP.FechaInicioPracticas+" "+modeloP.FechaTerminoPracticas+modeloP.actividad_practicas+" *"+modeloP.IdInstiPracticas);
+            try
+            {
                 _context.Add(modeloP);
                 _context.Add(modeloEP);
                 await _context.SaveChangesAsync();
-                return View("../Home/Documentos");
+                ViewBag.Succesful = "Alumno Registrado con Exito";
+                return View("../Home/Registro2");
+            }catch(Exception ex)
+            {
+                ViewBag.Error = "El alumno ya se encuentra registrado";
+                return View("../Home/Registro2");
+            }
         }
     }
 }

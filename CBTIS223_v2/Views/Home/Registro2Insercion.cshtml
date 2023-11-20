@@ -1,44 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity <!-- Framework para la autenticacion de usuarios -->
-@model Institucione
+﻿@using Microsoft.AspNetCore.Identity
+@model EstudiantesServicio
 @{
-    List<Institucione> lst = null!;
-    using (cbtis223Context db = new cbtis223Context())
-    {
-        lst = (from d in db.Instituciones
-               where d.TipoInstitucion == "Publica"
-               select new Institucione
-                       {
-                           IdInstitucion = d.IdInstitucion,
-                           Institucion = d.Institucion,
-                           TipoInstitucion = d.TipoInstitucion,
-                           Supervisor = d.Supervisor
-
-                       }).ToList();
-    }
-    List<SelectListItem> items = lst.ConvertAll(d =>
-    {
-        return new SelectListItem()
-                {
-                    Text = d.Institucion,
-                    Value = d.IdInstitucion.ToString(),
-                    Selected = true
-                };
-    });
-
-
-    ViewBag.items = items;
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
+    EstudiantesServicio Estudiante = ViewBag.estudiante;
     Layout = null;
-    
 }
 
-<div style="color:red">
-    <!-- Muestra un mensaje de error en color rojo -->
-    <strong>@ViewBag.Error</strong>
-</div>
-<div style="color:green">
-    <!-- Muestra un mensaje de exito en color verde -->
-    <strong>@ViewBag.Succesful</strong>
-</div>
 
 <!DOCTYPE HTML>
 <html>
@@ -46,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <head>
-    <title>Servicio Social</title>
+    <title>Practicas Profesionales</title>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -54,25 +21,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-    
+
+    <!-- Bootstrap-datepicker CSS
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    -->
     <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap-datepicker CSS 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">-->
+    <!-- Bootstrap-datepicker -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- Bootstrap-datepicker 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>-->
-
-    <!-- JS 
-    <script src="~/js/periodo.js"></script>-->
-
+    <!-- JS
+    <script src="~/js/periodo.js"></script> -->
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="~/css/registro.css" />
 
-    <!-- Font Awesome CSS para uso de iconos -->
+    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
@@ -136,80 +102,71 @@
             </div>
         </nav>
         <div class="container">
-            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros">
-
+            <form method="post" asp-action="InsertarRegistros" asp-controller="Registros2">
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
-                    <h4 class="mt-4">Registro Servicio Social</h4>
+                    <h4 class="mt-4">Registro Practicas Profesionales</h4>
                     <div class="col-md-6">
-                        <label  for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
-                        <input type="text" class="form-control" pattern="\d{14}" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
+                        <input type="hidden" asp-for="NumeroControl" />
+                        <div class="form-group">
+                            <label asp-for="NumeroControl" class="form-label"><strong>NUMERO DE CONTROL</strong></label>
+                            <input asp-for="NumeroControl" class="form-control" readonly/>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="Nombre" class="form-label"><strong>Nombre(s) del alumno:</strong> </label>
-                        <input type="text" class="form-control" pattern="[A-ZÑ_ÁÉÍÓÚÜ ]{2,25}[A-ZÑ_ÁÉÍÓÚÜ ]{0,25}" placeholder="Ej. JUAN CARLOS" id="Nombre" name="Nombre" oninput="this.value = this.value.toUpperCase()" required>
+                        <label for="Nombre" class="form-label"><strong>NOMBRE(s)</strong> </label>
+                        <input type="text" class="form-control" id="Nombre" name="Nombre"  value="@Estudiante.Nombre" readonly/>
                     </div>
                 </div>
 
                 <!--Apellidos-->
                 <div class="row mb-3">
                     <div class="col-md-6 ">
-                        <label for="AP" class="form-label"><strong>Apellido Paterno del alumno:</strong></label>
-                        <input type="text" class="form-control" pattern="[A-ZÑ_ÁÉÍÓÚÜ ]{2,25}[A-ZÑ_ÁÉÍÓÚÜ ]{0,25}" placeholder="Ej. PEREZ" id="ApellidoPaterno" name="ApellidoPaterno" oninput="this.value = this.value.toUpperCase()" required>
+                        <label for="ApellidoPaterno" class="form-label"><strong>APELLIDO PATERNO</strong> </label>
+                        <input type="text" class="form-control" id="ApellidoPaterno" name="ApellidoPaterno" value="@Estudiante.ApellidoPaterno" readonly />
                     </div>
                     <div class="col-md-6 ">
-                        <label for="AM" class="form-label"><strong>Apellido Materno del alumno:</strong> </label>
-                        <input type="text" class="form-control" pattern="[A-ZÑ_ÁÉÍÓÚÜ ]{2,25}[A-ZÑ_ÁÉÍÓÚÜ ]{0,25}" placeholder="Ej.GARCIA" id="ApellidoMaterno" name="ApellidoMaterno" oninput="this.value = this.value.toUpperCase()">
+                        <label for="ApellidoPaterno" class="form-label"><strong>APELLIDO MATERNO</strong> </label>
+                        <input type="text" class="form-control" id="ApellidoMaterno" name="ApellidoMaterno" value="@Estudiante.ApellidoMaterno" readonly />
                     </div>
                 </div>
 
                 <!--CURP y Especialidad-->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="CURP" class="form-label"><strong>CURP:</strong></label>
-                        <input type="text" class="form-control" pattern="^[A-Z]{4}\d{6}[A-Z]{6}[A-Z0-9]\d$" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" required>
+                        <label for="ApellidoPaterno" class="form-label"><strong>CURP</strong> </label>
+                        <input type="text" class="form-control" id="Curp" name="Curp" value="@Estudiante.Curp" readonly />
                     </div>
 
                     <div class="col-md-6">
-                        <label for="Especialidad" class="form-label"><strong>Especialidad:</strong></label>
-                        <select class="form-select" id="Especialidad" name="Especialidad" required>
-                            <option disabled selected>Selecciona una Especialidad</option>
-                            <option value="PROGRAMACION">PROGRAMACION</option>
-                            <option value="CONSTRUCCION">CONSTRUCCION</option>
-                            <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
-                            <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRAFICO DIGITAL</option>
-                            <option value="ELECTRICIDAD">ELECTRICIDAD</option>
-                            <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACION DE RECURSOS HUMANOS</option>
-                        </select>
+                        <label for="ApellidoPaterno" class="form-label"><strong>ESPECIALIDAD</strong> </label>
+                        <input type="text" class="form-control" id="Especialidad" name="Especialidad" value="@Estudiante.Especialidad" readonly />
                     </div>
                 </div>
 
                 <!--Ciclo Escolar-->
                 <div class="row mb-3">
-                    
                     <div class="col-md-6">
-                        <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
-                        <select class="form-select" id="Ciclo" name="Ciclo" required>
-                            <option disabled selected>Selecciona el Ciclo Escolar</option>
-                            <option value="2019-2022">2019-2022</option>
-                            <option value="2020-2023">2020-2023</option>
-                            <option value="2021-2024">2021-2024</option>
-                            <option value="2022-2025">2022-2025</option>
-                            <option value="2023-2026">2023-2026</option>
-                        </select>
+                        <label for="Ciclo" class="form-label"><strong>CICLO ESCOLAR</strong> </label>
+                        <input type="text" class="form-control" id="Ciclo" name="Ciclo" value="@Estudiante.Ciclo" readonly />
                     </div>
                 </div>
 
+                <!--ID instituciones-->
                 <!--Institucion-->
                 <div class="row mb-3">
-                    <div class="col-md-6"> 
-                        <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
-                        @Html.DropDownList("IdInstiServicio",items,"",new {@class="form-select"})
+                    <div class="col-md-6">
+                        <!-- Seleccionar institucion -->
+                        <div class="col-md-6">
+                            <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
+                            @Html.DropDownList("IdInstiPracticas",items,"",new {@class="form-select"})
+                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <!--Lectura de actividad que realiza el alumno en su servicio-->
                         <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
-                        <input type="text" class="form-control" id="actividad_Servicio" name="actividad_Servicio"
+                        <input type="text" class="form-control" id="actividad_practicas" name="actividad_practicas"
                                oninput="this.value = this.value.toUpperCase()" required>
                     </div>
                 </div>
@@ -220,7 +177,7 @@
                         <div class="form-group">
                             <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioServicio" class="form-control" required>
+                                <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioPracticas" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Inicio" id="FechaInicioServicio" name="FechaInicioServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
@@ -235,7 +192,7 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label"><strong>Fecha Final:</strong></label>
                             <div class="input-group">
-                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoServicio" class="form-control" required>
+                                <input type="date" id="FechaFinal" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaTerminoPracticas" class="form-control" required>
                                 <!--<div class="input-group-append">
                                     <span class="input-group-text Fin" id="FechaTerminoServicio" name="FechaTerminoServicio" style="cursor: pointer;">
                                         <i class="fas fa-calendar"></i>
@@ -250,15 +207,14 @@
                 <script>
                     const input = document.getElementById('FechaInicio');
                     input.addEventListener('change', () => {
-                         console.log(input.value);
+                        console.log(input.value);
                     });
                     const input2 = document.getElementById('FechaFinal');
                     input2.addEventListener('change', () => {
                         console.log(input2.value);
                     });
                 </script>
-           
-               <!--Botones Limpiar y Registrar-->
+                <!--Botones-->
                 <div class="row mb-3 mb-4">
                     <div class="col-md-6">
                         <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>

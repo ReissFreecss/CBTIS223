@@ -31,12 +31,18 @@ namespace CBTIS223_v2.Models
             IList<Institucione> instituciones = await Instituciones.ToListAsync();
             return instituciones;
         }
+
+        public async Task<IList<EstudiantesServicio>> GetEstudiantes()
+        {
+            IList<EstudiantesServicio> estudiantes = await EstudiantesServicios.ToListAsync();
+            return estudiantes;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=cbtis223;user=root;password=chocomilk", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=cbtis223;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
             }
         }
 
@@ -113,6 +119,10 @@ namespace CBTIS223_v2.Models
                 entity.Property(e => e.Especialidad)
                     .HasMaxLength(50)
                     .HasColumnName("especialidad");
+
+                entity.Property(e => e.Ciclo)
+                   .HasMaxLength(50)
+                   .HasColumnName("ciclo");
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(255)
