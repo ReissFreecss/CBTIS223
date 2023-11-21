@@ -48,7 +48,7 @@ namespace CBTIS223_v2.Controllers
             try
             {
                 cbtis223Context ct = new cbtis223Context();
-                var escuela = await _context.Escuelas.FindAsync(1);
+                var escuela = await _context.Escuelas.FindAsync(ID);
                 escuela.NombreEscuela = modeloE.NombreEscuela;
                 escuela.NombreDirector = modeloE.NombreDirector;
                 escuela.NombreEncargadoEstatal = modeloE.NombreEncargadoEstatal;
