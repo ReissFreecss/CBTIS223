@@ -21,7 +21,8 @@ namespace CBTIS223_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Editar(int ID) { 
+        public async Task<IActionResult> Editar(int ID)
+        {
             cbtis223Context ct = new cbtis223Context();
             modeloI = await ct.Instituciones.FindAsync(ID);
             if (modeloI == null)
@@ -36,13 +37,27 @@ namespace CBTIS223_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditarInstitucion(
-            [Bind("IdInstitucion", "Institucion", "TipoInstitucion", "Supervisor", "UbicacionInstitucion")] Institucione modelI)
+        public async Task<IActionResult> EditarInstitucion(int IdInstitucion)
         {
-            _logger.LogInformation(modeloI.IdInstitucion+" "+modeloI.Institucion+" "+modeloI.TipoInstitucion+" "+modeloI.Supervisor+" *"+modeloI.UbicacionInstitucion);
-            _context.Instituciones.Update(modeloI);
-            await _context.SaveChangesAsync();
-            return View("../Home/Institucion");
+            //Recibe los datos del submit y los cambia valor por valor en el modelo de la escuela. 
+            //Al final guarda los cambios y regresa a la vista de escuela principal
+            try
+            {
+                cbtis223Context ct = new cbtis223Context();
+                var institucion = await _context.Instituciones.FindAsync(IdInstitucion);
+                institucion.Institucion = modeloI.Institucion;
+                institucion.TipoInstitucion = modeloI.TipoInstitucion;
+                institucion.Supervisor = modeloI.Supervisor;
+                institucion.UbicacionInstitucion = modeloI.UbicacionInstitucion;
+                await _context.SaveChangesAsync();
+                ViewBag.Succesful = "Datos modificados con exito";
+                return View("../Home/Institucion");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "No se pudo realizar la actualización";
+                return View("../Home/Institucion");
+            }
         }
     }
 }
