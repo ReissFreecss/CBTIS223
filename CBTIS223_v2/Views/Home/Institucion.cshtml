@@ -7,6 +7,15 @@
     IList<Institucione> instituciones = await ct.GetInstituciones();
 }
 
+<div style="color:red">
+    <!-- Muestra un mensaje de error en color rojo -->
+    <strong>@ViewBag.Error</strong>
+</div>
+<div style="color:green">
+    <!-- Muestra un mensaje de exito en color verde -->
+    <strong>@ViewBag.Succesful</strong>
+</div>
+
 <!DOCTYPE HTML>
 <html>
 <meta charset="utf-8">

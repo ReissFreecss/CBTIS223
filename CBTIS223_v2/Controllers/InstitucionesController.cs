@@ -26,10 +26,21 @@ namespace CBTIS223_v2.Controllers
             return View(Lista);
         }
 
-        public IActionResult Editar()
+        public async Task<IActionResult> Editar (int ID)
         {
-            return View("../Instituciones/EditarInstituciones");
+            cbtis223Context ct = new cbtis223Context();
+            IList<Institucione> instituciones = await ct.GetInstituciones();
+            Institucione institucion = instituciones.FirstOrDefault(x => x.IdInstitucion == ID);
+            if (instituciones == null)
+            {
+                ViewBag.Error = "Error";
+                return View("../Home/Institucion");
+            }
+
+            ViewBag.Datos = institucion;
+            return View("../Home/EditarInstituciones");
         }
+
 
 
         public async Task<IActionResult> Eliminar(int ID)
@@ -49,5 +60,8 @@ namespace CBTIS223_v2.Controllers
             await _context.SaveChangesAsync();
             return View("../Home/Institucion");
         }
+
+
+
     }
 }

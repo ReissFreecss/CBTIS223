@@ -1,13 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CBTIS223_v2.Models
 @using CBTIS223_v2.Controllers;
+@model Institucione
 
 @{
-    ViewData["Title"] = "Institucion";
     Layout = null;
-    cbtis223Context ct = new cbtis223Context();
-    IList<Institucione> instituciones = await ct.GetInstituciones();
-    var modelo = ViewData["modelo"] as Institucione;
+    Institucione Datos = ViewBag.Datos;
+
 }
 
 <!DOCTYPE HTML>
@@ -45,15 +44,15 @@
             <div class="row">
                 <!-- Left Column: User Creation -->
                 <div class="col-md-4">
-                    <form method="post" asp-action="Editar" asp-controller="EditarIns">
-                        <h4 class="mt-4">Editar Institucion</h4>
+                    <form method="post" asp-action="EditarInstitucion" asp-controller="EditarIns">
+                        <h4 class="mt-4">Editar Institucion</h4
                         <div class="mb-3">
-                            <label for="Institucion" class="form-label"><strong>ID:</strong></label>
-                            <input class="form-control" asp-for="@modelo.IdInstitucion" >
+                            <label for="Institucion" class="form-label"><strong>ID</strong></label>
+                            <input type="text" class="form-control" id="IdInstitucion" name="IdInstitucion" value="@Datos.IdInstitucion" required readonly>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
-                            <input type="text" class="form-control" asp-for="@modelo.Institucion" required>
+                            <input type="text" class="form-control" id="Institucion" value="@Datos.Institucion" name="Institucion" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12">
@@ -67,11 +66,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
-                            <input type="text" class="form-control" id="Supervisor" name="Supervisor" required>
+                            <input type="text" class="form-control" id="Supervisor" value="@Datos.Supervisor" name="Supervisor" required>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
-                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" required>
+                            <input type="text" class="form-control" id="UbicacionInstitucion" value="@Datos.UbicacionInstitucion" name="UbicacionInstitucion" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
