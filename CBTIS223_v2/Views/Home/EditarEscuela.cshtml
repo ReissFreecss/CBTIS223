@@ -2,18 +2,8 @@
 @model Escuela
 @{
     Layout = null;
-    cbtis223Context ct = new cbtis223Context();
-    IList<Escuela> escuelas = await ct.GetEscuelas();
     Escuela Datos = ViewBag.Datos;
 }
-<div style="color:red">
-    <!-- Muestra un mensaje de error en color rojo -->
-    <strong>@ViewBag.Error</strong>
-</div>
-<div style="color:green">
-    <!-- Muestra un mensaje de exito en color verde -->
-    <strong>@ViewBag.Succesful</strong>
-</div>
 
 <!DOCTYPE HTML>
 <html>
@@ -111,31 +101,59 @@
                                 <th>Director</th>
                                 <th>Encargado General</th>
                                 <th>Director General</th>
-                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in escuelas)
-                            {
+                         
                                 <tr>
-                                            <td class="text-center">@Html.DisplayFor(x => item.NombreEscuela)</td>
-                                            <td class="text-center">@Html.DisplayFor(x =>item.NombreDirector)</td>
-                                            <td class="text-center">@Html.DisplayFor(x =>item.NombreEncargadoEstatal)</td>
-                                            <td class="text-center">@Html.DisplayFor(x =>item.NombreDirectorGeneral)</td>
-                                            <td>
-                                                @*Boton para dirigir a la vista donde recibes nuevos datos*@
-                                        <a class="btn btn-primary btn-sm" asp-action="Editar" asp-controller="Escuelas"
-                                                   asp-route-id="@item.ID" title="Editar datos de @item.NombreEscuela">
-                                                    <i class="button-row">EDITAR</i>
-                                                </a>
+                                    <td class="text-center">@Html.DisplayFor(x => Datos.NombreEscuela)</td>
+                                    <td class="text-center">@Html.DisplayFor(x =>Datos.NombreDirector)</td>
+                                    <td class="text-center">@Html.DisplayFor(x =>Datos.NombreEncargadoEstatal)</td>
+                                    <td class="text-center">@Html.DisplayFor(x =>Datos.NombreDirectorGeneral)</td>
                                 </tr>
-                            }
+                            
                         </tbody>
                     </table>
                     <div class="col-md-6">
-                       
                     </div>
                 </div>
+                <div class="col-md-4">
+                    @*Form para recibir todos los nuevos datos y regresar al controlador en el metodo HTTPPOST*@
+                    <form method="post" asp-action="Insertar" asp-controller="Escuelas">
+                        <h4 class="mt-4">Actualizar Datos:</h4>
+                        @*El id no se muestra pero se guarda*@
+                        <input type="hidden" asp-for="ID" />
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Escuela:</strong></label>
+                            <input type="text" class="form-control" id="NombreEscuela" name="NombreEscuela" value="@Datos.NombreEscuela" required readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Director</strong></label>
+                            <input type="text" class="form-control" id="NombreDirector" name="NombreDirector" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Responsable" class="form-label"><strong>Responsable Estatal :</strong></label>
+                            <input type="text" class="form-control" id="NombreEncargadoEstatal" name="NombreEncargadoEstatal" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Director General:</strong></label>
+                            <input type="text" class="form-control" id="NombreDirectorGeneral" name="NombreDirectorGeneral" required>
+                        </div>
+                        <div class="row mb-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="button-row text-md-start text-center">
+                                    <button type="button" class="btn w-75 btnclr">Limpiar</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="button-row text-md-end text-center">
+                                    <button type="submit" class="btn w-75 btnclr">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <footer>
                 <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>

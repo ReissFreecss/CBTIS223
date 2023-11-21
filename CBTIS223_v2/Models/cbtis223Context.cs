@@ -16,8 +16,10 @@ namespace CBTIS223_v2.Models
         {
         }
 
-        public async Task<List<Escuela>> getEscuelas() { 
-            return await this.Escuelas.ToListAsync();
+        public async Task<IList<Escuela>> GetEscuelas()
+        {
+            IList<Escuela> DatosEscuela = await Escuelas.ToListAsync();
+            return DatosEscuela;
         }
         public virtual DbSet<Escuela> Escuelas { get; set; } = null!;
         public virtual DbSet<EstudiantesPractica> EstudiantesPracticas { get; set; } = null!;
@@ -53,7 +55,7 @@ namespace CBTIS223_v2.Models
 
             modelBuilder.Entity<Escuela>(entity =>
             {
-                entity.HasKey(e => e.NombreEscuela)
+                entity.HasKey(e => e.ID)
                     .HasName("PRIMARY");
 
                 entity.ToTable("escuela");
