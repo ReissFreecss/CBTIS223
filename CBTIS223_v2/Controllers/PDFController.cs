@@ -1,5 +1,6 @@
 ﻿using CBTIS223_v2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -11,6 +12,8 @@ namespace CBTIS223_v2.Controllers
         private readonly ILogger<HomeController> _logger;
         private IWebHostEnvironment _host;
         private cbtis223Context _context;
+        public Escuela modeloE { get; set; }
+
 
         public PDFController(ILogger<HomeController> logger, IWebHostEnvironment host, cbtis223Context context)
         {
@@ -18,9 +21,43 @@ namespace CBTIS223_v2.Controllers
             _host = host;
             _context = context;
         }
+
+        private string ObtenerIniciales(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+            {
+                return string.Empty;
+            }
+
+            // Dividir el nombre en palabras
+            var palabras = nombre.Split(' ');
+
+            // Tomar la primera letra de cada palabra y concatenarlas
+            string iniciales = string.Join("", palabras.Select(p => p[0]));
+
+            return iniciales;
+        }
+
+
         //Metodo que genera los PDF Hoja de liberacion servicio social
         public ActionResult DescargarPDF()
         {
+            //Extraemos los datos de la escuela
+            int IDEscuela = 1;
+            var escuela = _context.Escuelas.FirstOrDefault(x => x.ID  == IDEscuela);
+
+            //Extraemos fechas actuales
+            string añoActual = DateTime.Now.Year.ToString();
+            string diaActual = DateTime.Now.Day.ToString();
+            string mesActual = DateTime.Now.ToString("MMMM");
+
+            //Extraemos numero de folio
+            string NoFolio = Request.Form["noConstancia"];
+
+            //Obtener las iniciales junto con su nombre
+            string nombreDirector = escuela.NombreDirector;
+            string iniciales = ObtenerIniciales(nombreDirector);
+
             string tipoI = Request.Form["SelectorSP"];
             if (tipoI == "S")
             {
@@ -29,6 +66,7 @@ namespace CBTIS223_v2.Controllers
                 {
                     //Obtenemos datos del form
                     string idEstudiante = Request.Form["idEstudiante"];
+                    
 
                     try
                     {
@@ -104,7 +142,7 @@ namespace CBTIS223_v2.Controllers
                                     {
                                         //No. de oficio //Modificable
                                         txt.Span("\nOFICIO No. ");
-                                        txt.Span("«OFICIO»");//Modificable
+                                        txt.Span(NoFolio);//Modificable
                                         txt.Span("(CBTis 223) 087");
                                         txt.Span(" /2023"); //Año en curso - Modificable
 
@@ -116,7 +154,7 @@ namespace CBTIS223_v2.Controllers
                                         //Texto personalizado para la fecha
                                         txt.Span("\nGaleana, Zacatepec, Mor; ");      //Lugar //Modificable
 
-                                        txt.Span("a 15 de marzo del 2023");   //Fecha //Modificable
+                                        txt.Span("a " + diaActual+ " de " + mesActual + " del " + añoActual);   //Fecha //Modificable
                                     });
 
 
@@ -177,37 +215,7 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span((FechaTermino.ToString("dd MMMM"+" Del "+ "yyyy")));//Día, Mes  y Año de termino
                                                                                                      //Modificable
 
-                                        txt.Span(", cubriendo un horario de:" + servicioSocial.actividad_servicio).LetterSpacing(0.05f);
-                                    });
-
-                                    //Columna para los días y horarios prestados
-                                    col1.Item().DefaultTextStyle(textoArial).AlignCenter().Text(txt =>
-                                    {
-                                        //De lunes a viernes
-                                        //////////////////////////
-                                        txt.Span("Lunes a viernes")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" de ").LetterSpacing(0.05f).Bold();
-
-                                        // Horario
-                                        txt.Span("15:00 a 18:00")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" horas").LetterSpacing(0.05f).Bold();
-
-                                        //Sábado
-                                        //////////////////////////
-                                        txt.Span("\nSábado")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" de ").LetterSpacing(0.05f).Bold();
-
-                                        // Horario
-                                        txt.Span("09:00 a 14:00")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" horas").LetterSpacing(0.05f).Bold();
+                                        txt.Span(", " + servicioSocial.actividad_servicio).Bold().LetterSpacing(0.02f); ;
                                     });
 
 
@@ -229,7 +237,7 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span("\n\n\n").Underline();
 
                                         //Columna para la firma del Director del Plantel
-                                        txt.Span("CÉSAR REBOLLEDO VALLE").SemiBold();//Editable
+                                        txt.Span(escuela.NombreDirector).SemiBold();//Editable
                                         txt.Span("\nDIRECTOR").SemiBold();
                                     });
 
@@ -243,7 +251,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().AlignLeft().Padding(10).Text(txt =>
                                     {
                                         txt.Span("c.c.p - Archivo").FontFamily(Fonts.Arial).FontSize(6); ;
-                                        txt.Span("\nCRV/DIVL/CCG/*asa\n").FontFamily(Fonts.Arial).FontSize(6); ;
+                                        txt.Span("\n"+iniciales+"/DIVL/CCG/*asa\n").FontFamily(Fonts.Arial).FontSize(6); ;
                                     });
 
                                     col1.Item().AlignLeft()
@@ -288,6 +296,7 @@ namespace CBTIS223_v2.Controllers
 
                         //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla Servicio social
                         var servicioSocial = _context.ServicioSocials.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
+                       
 
                         //En caso de no encotrar mandamos mensaje
                         if (servicioSocial == null)
@@ -352,13 +361,13 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span("\n CONSTANCIA NO.: ").SemiBold()
                                         .FontFamily("Arial").FontSize(12);
 
-                                        txt.Span("65").SemiBold()           //No. de constancia
+                                        txt.Span(NoFolio).SemiBold()  //No. de constancia
                                         .FontFamily("Arial").FontSize(12); //Modificable
 
                                         txt.Span(" (CBTIS No.223)").SemiBold() //Plantel
                                         .FontFamily("Arial").FontSize(12); //Modificable
 
-                                        txt.Span(" 2023").SemiBold()        //Año
+                                        txt.Span(añoActual).SemiBold()        //Año
                                         .FontFamily("Arial").FontSize(12); //Modificable
                                     });
 
@@ -383,7 +392,7 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span("Galeana Morelos, ")      //Lugar
                                         .FontFamily("Arial").FontSize(12); //Modificable
 
-                                        txt.Span("a 30 de mayo del 2023")   //Fecha
+                                        txt.Span("a " + diaActual + " de " + mesActual + " del " + añoActual)   //Fecha
                                         .FontFamily("Arial").FontSize(12); //Modificable
                                     });
 
@@ -492,7 +501,7 @@ namespace CBTIS223_v2.Controllers
                                     "________________________________________________________")
                                     .Underline();
                                     //Columna para la firma del Director del Plantel
-                                    col1.Item().AlignCenter().Text("CESAR REBOLLEDO VALLE")//Editable
+                                    col1.Item().AlignCenter().Text(escuela.NombreDirector)//Editable
                                     .FontFamily("Arial").FontSize(12); ;
                                     col1.Item().AlignCenter().Text("DIRECTOR DEL PLANTEL ")
                                     .FontFamily("Arial").FontSize(12);
@@ -643,9 +652,9 @@ namespace CBTIS223_v2.Controllers
                                     {
                                         //No. de oficio //Modificable
                                         txt.Span("\nOFICIO No. ");
-                                        txt.Span("«OFICIO»");//Modificable
-                                        txt.Span("(CBTis 223) 087");
-                                        txt.Span(" /2023"); //Año en curso - Modificable
+                                        txt.Span(NoFolio);//Modificable
+                                        txt.Span("(CBTis 223) 087 ");
+                                        txt.Span(añoActual); //Año en curso - Modificable
 
                                         //Texto personalizado para el Asunto
                                         txt.Span("\nAsunto: Carta de presentación de");
@@ -655,7 +664,7 @@ namespace CBTIS223_v2.Controllers
                                         //Texto personalizado para la fecha
                                         txt.Span("\nGaleana, Zacatepec, Mor; ");      //Lugar //Modificable
 
-                                        txt.Span("a 15 de marzo del 2023");   //Fecha //Modificable
+                                        txt.Span("a " + diaActual + " de " + mesActual + " del " + añoActual);   //Fecha //Modificable
                                     });
 
 
@@ -716,38 +725,10 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span((FechaTermino.ToString("dd MMMM"+" Del "+ "yyyy")));//Día, Mes  y Año de termino
                                                                         //Modificable
 
-                                        txt.Span(", cubriendo un horario de:" + servicioPracticas.actividad_practicas).LetterSpacing(0.05f);
+                                        txt.Span(", " + servicioPracticas.actividad_practicas).LetterSpacing(0.05f);
                                     });
 
-                                    //Columna para los días y horarios prestados
-                                    col1.Item().DefaultTextStyle(textoArial).AlignCenter().Text(txt =>
-                                    {
-                                        //De lunes a viernes
-                                        //////////////////////////
-                                        txt.Span("Lunes a viernes")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" de ").LetterSpacing(0.05f).Bold();
-
-                                        // Horario
-                                        txt.Span("15:00 a 18:00")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" horas").LetterSpacing(0.05f).Bold();
-
-                                        //Sábado
-                                        //////////////////////////
-                                        txt.Span("\nSábado")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" de ").LetterSpacing(0.05f).Bold();
-
-                                        // Horario
-                                        txt.Span("09:00 a 14:00")
-                                        .LetterSpacing(0.05f).Bold();
-
-                                        txt.Span(" horas").LetterSpacing(0.05f).Bold();
-                                    });
+                                    
 
 
                                     //Columna el texto posterior a las fechas y horarios
@@ -768,7 +749,7 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span("\n\n\n").Underline();
 
                                         //Columna para la firma del Director del Plantel
-                                        txt.Span("CÉSAR REBOLLEDO VALLE").SemiBold();//Editable
+                                        txt.Span(escuela.NombreDirector).SemiBold();//Editable
                                         txt.Span("\nDIRECTOR").SemiBold();
                                     });
 
@@ -782,7 +763,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().AlignLeft().Padding(10).Text(txt =>
                                     {
                                         txt.Span("c.c.p - Archivo").FontFamily(Fonts.Arial).FontSize(6); ;
-                                        txt.Span("\nCRV/DIVL/CCG/*asa\n").FontFamily(Fonts.Arial).FontSize(6); ;
+                                        txt.Span("\n" + iniciales + "/DIVL/CCG/*asa\n").FontFamily(Fonts.Arial).FontSize(6); ;
                                     });
 
                                     col1.Item().AlignLeft()
@@ -888,8 +869,8 @@ namespace CBTIS223_v2.Controllers
                                     {
                                         //No. de oficio //Modificable
                                         txt.Span("\nOFICIO No. ");
-                                        txt.Span("«OFICIO»");//Modificable
-                                        txt.Span(" /2023");
+                                        txt.Span(NoFolio);//Modificable
+                                        txt.Span(añoActual);
 
                                         //Texto personalizado para el Asunto
                                         txt.Span("\n\nAsunto: CONSTANCIA DE LIBERACIÓN").SemiBold();
@@ -904,7 +885,7 @@ namespace CBTIS223_v2.Controllers
 
                                         txt.Span("Galeana, Zacatepec, Mor; ");      //Lugar //Modificable
 
-                                        txt.Span("a 16 de junio del 2023");   //Fecha //Modificable
+                                        txt.Span("a " + diaActual + " de " + mesActual + " del " + añoActual);   //Fecha //Modificable
                                     });
 
                                     //Columna los datos del Director General y la dirección
@@ -971,15 +952,14 @@ namespace CBTIS223_v2.Controllers
                                     {
                                         txt.Span("\n\nDurante el periodo comprendido de ")
                                         .LetterSpacing(0.01f); ;
+                                        
+                                        txt.Span((FechaInicio.ToString("dd MMMM"+" Del "+ "yyyy")));//Día y Mes de inicio
+                                                                                                    //Modificable
 
-                                        txt.Span("Marzo -")      //Periodo Inicio
-                                        .LetterSpacing(0.01f); ;//Modificable
+                                        txt.Span(" al ");
 
-                                        txt.Span(" Junio")      //Periodo Fin
-                                        .LetterSpacing(0.01f); ;//Modificable
-
-                                        txt.Span(" 2023 ")      //Año
-                                        .LetterSpacing(0.01f); ;
+                                        txt.Span((FechaTermino.ToString("dd MMMM"+" Del "+ "yyyy")));//Día, Mes  y Año de termino
+                                                                                                     //Modificable
 
                                     });
 
@@ -990,7 +970,7 @@ namespace CBTIS223_v2.Controllers
                                     .Underline();
 
                                         //Columna para la firma del Director del Plantel
-                                        txt.Span("\nCÉSAR REBOLLEDO VALLE").SemiBold();//Editable
+                                        txt.Span("\n" + escuela.NombreDirector).SemiBold();//Editable
                                         txt.Span("\nDIRECTOR").SemiBold();
                                     });
 
