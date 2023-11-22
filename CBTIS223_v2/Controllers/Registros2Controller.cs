@@ -49,9 +49,10 @@ namespace CBTIS223_v2.Controllers
                 };
             });
             cbtis223Context ct = new cbtis223Context();
-            IList<EstudiantesServicio> estudiantes = await ct.GetEstudiantes();
-            EstudiantesServicio estudiante = estudiantes.FirstOrDefault(x => x.NumeroControl == NumeroControl);
+            //IList<EstudiantesServicio> estudiantes = await ct.GetEstudiantes();
+            EstudiantesServicio estudiante = await ct.GetEstudiante(NumeroControl);
             if (estudiante == null)
+
             {
                 ViewBag.Error = "El alumno no ha realizado el servicio social";
                 return View("../Home/Registro2");

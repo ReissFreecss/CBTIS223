@@ -109,7 +109,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
-                            <input type="text" class="form-control" id="Institucion" name="Institucion" required>
+                            <input type="text" class="form-control" id="Institucion" name="Institucion" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12">
@@ -123,11 +123,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
-                            <input type="text" class="form-control" id="Supervisor" name="Supervisor" required>
+                            <input type="text" class="form-control" id="Supervisor" name="Supervisor" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
-                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" required>
+                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" placeholder="Calle #Exterior, Colonia, Municipio, Estado"  oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">

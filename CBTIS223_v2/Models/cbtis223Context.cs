@@ -39,6 +39,12 @@ namespace CBTIS223_v2.Models
             IList<EstudiantesServicio> estudiantes = await EstudiantesServicios.ToListAsync();
             return estudiantes;
         }
+
+        public async Task<EstudiantesServicio> GetEstudiante(string nc) {
+            EstudiantesServicio estudiante = await this.EstudiantesServicios.FirstOrDefaultAsync(x => x.NumeroControl == nc);
+            return estudiante;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

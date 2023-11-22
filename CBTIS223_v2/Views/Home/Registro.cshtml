@@ -161,7 +161,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="CURP" class="form-label"><strong>CURP:</strong></label>
-                        <input type="text" class="form-control" pattern="^[A-Z]{4}\d{6}[A-Z]{6}[A-Z0-9]\d$" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" required>
+                        <input type="text" class="form-control" pattern="^[A-Z]{4}\d{6}[A-Z]{6}[A-Z0-9]\d$" placeholder="Ej. PEGJ850315HJCRRN07" id="Curp" name="Curp" title="El formato de la CURP es incorrecto, Ejemplo: PEGJ850315HJCRRN07"  required>
                     </div>
 
                     <div class="col-md-6">
@@ -183,14 +183,7 @@
                     
                     <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
-                        <select class="form-select" id="Ciclo" name="Ciclo" required>
-                            <option disabled selected>Selecciona el Ciclo Escolar</option>
-                            <option value="2019-2022">2019-2022</option>
-                            <option value="2020-2023">2020-2023</option>
-                            <option value="2021-2024">2021-2024</option>
-                            <option value="2022-2025">2022-2025</option>
-                            <option value="2023-2026">2023-2026</option>
-                        </select>
+                        <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="Ciclo" name="Ciclo" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
                     </div>
                 </div>
 
