@@ -179,7 +179,7 @@ namespace CBTIS223_v2.Controllers
                                         "a sus finas atenciones al alumno:").LetterSpacing(0.04f);//Nombre del alumno Modificable
 
                                     col1.Item().DefaultTextStyle(textoArial).AlignCenter().Padding(10)
-                                    .Text(alumno.Nombre + " " + alumno.ApellidoPaterno + " " + alumno.ApellidoMaterno).Bold();//Nombre del alumno Modificable
+                                    .Text(alumno.Nombre + " " + alumno.Apellidos).Bold();//Nombre del alumno Modificable
 
 
                                     //Texto personalizado para el primer parrafo del contenido
@@ -450,7 +450,7 @@ namespace CBTIS223_v2.Controllers
                                             "el (la) alumno (a): ")
                                         .FontFamily("Arial").FontSize(12).LetterSpacing(0.05f);
 
-                                        txt.Span(alumno.Nombre + " " + alumno.ApellidoPaterno + " " + alumno.ApellidoMaterno) //Nombre del alumno
+                                        txt.Span(alumno.Nombre + " " + alumno.Apellidos) //Nombre del alumno
                                         .Bold().FontFamily("Arial").FontSize(12); //Modificable
 
                                         txt.Span(" No. De control: ")//Texto previo al No. contol
@@ -689,7 +689,7 @@ namespace CBTIS223_v2.Controllers
                                         "a sus finas atenciones al alumno:").LetterSpacing(0.04f);//Nombre del alumno Modificable
 
                                     col1.Item().DefaultTextStyle(textoArial).AlignCenter().Padding(10)
-                                    .Text(alumno.Nombre).Bold();//Nombre del alumno Modificable
+                                    .Text(alumno.Nombre + " " + alumno.Apellidos).Bold();//Nombre del alumno Modificable
 
 
                                     //Texto personalizado para el primer parrafo del contenido
@@ -922,7 +922,7 @@ namespace CBTIS223_v2.Controllers
                                             "el (la) alumno (a): ")
                                         .LetterSpacing(0.04f);
 
-                                        txt.Span(alumno.Nombre) //Nombre del alumno
+                                        txt.Span(alumno.Nombre + " " + alumno.Apellidos) //Nombre del alumno
                                         .Bold(); //Modificable
 
                                         txt.Span(" No. De control: ")//Texto previo al No. contol

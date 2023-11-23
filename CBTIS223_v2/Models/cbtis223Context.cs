@@ -112,13 +112,9 @@ namespace CBTIS223_v2.Models
                     .HasMaxLength(15)
                     .HasColumnName("numero_control");
 
-                entity.Property(e => e.ApellidoMaterno)
+                entity.Property(e => e.Apellidos)
                     .HasMaxLength(255)
-                    .HasColumnName("apellido_materno");
-
-                entity.Property(e => e.ApellidoPaterno)
-                    .HasMaxLength(255)
-                    .HasColumnName("apellido_paterno");
+                    .HasColumnName("apellidos");
 
                 entity.Property(e => e.Curp)
                     .HasMaxLength(18)
