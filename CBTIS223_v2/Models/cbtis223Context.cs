@@ -50,7 +50,7 @@ namespace CBTIS223_v2.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=cbtis223;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=cbtis223;user=root;password=chocomilk", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
             }
         }
 
@@ -81,6 +81,9 @@ namespace CBTIS223_v2.Models
                 entity.Property(e => e.NombreEncargadoEstatal)
                     .HasMaxLength(200)
                     .HasColumnName("nombre_encargado_estatal");
+                entity.Property(e => e.NombreDirectorGeneralProfesiones)
+                   .HasMaxLength(200)
+                   .HasColumnName("nombre_director_general_profesiones");
             });
 
             modelBuilder.Entity<EstudiantesPractica>(entity =>

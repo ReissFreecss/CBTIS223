@@ -105,6 +105,7 @@
                                 <th>Director</th>
                                 <th>Encargado General</th>
                                 <th>Director General</th>
+                                <th>Director General Profesiones</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -116,6 +117,7 @@
                                             <td class="text-center">@Html.DisplayFor(x =>item.NombreDirector)</td>
                                             <td class="text-center">@Html.DisplayFor(x =>item.NombreEncargadoEstatal)</td>
                                             <td class="text-center">@Html.DisplayFor(x =>item.NombreDirectorGeneral)</td>
+                                            <td class="text-center">@Html.DisplayFor(x =>item.NombreDirectorGeneralProfesiones)</td>
                                             <td>
                                                 @*Boton para dirigir a la vista donde recibes nuevos datos*@
                                         <a class="btn btn-primary btn-sm" asp-action="Editar" asp-controller="Escuelas"
