@@ -13,6 +13,7 @@ namespace CBTIS223_v2.Controllers
         private IWebHostEnvironment _host;
         private cbtis223Context _context;
         public Escuela modeloE { get; set; }
+        public Institucione modeloI { get; set; }
 
 
         public PDFController(ILogger<HomeController> logger, IWebHostEnvironment host, cbtis223Context context)
@@ -42,59 +43,54 @@ namespace CBTIS223_v2.Controllers
         //Metodo que genera los PDF Hoja de liberacion servicio social
         public ActionResult DescargarPDF()
         {
-            //Extraemos los datos de la escuela
-            int IDEscuela = 1;
-            var escuela = _context.Escuelas.FirstOrDefault(x => x.ID  == IDEscuela);
-
-            //Extraemos fechas actuales
-            string añoActual = DateTime.Now.Year.ToString();
-            string diaActual = DateTime.Now.Day.ToString();
-            string mesActual = DateTime.Now.ToString("MMMM");
-
-            //Extraemos numero de folio
-            string NoFolio = Request.Form["noConstancia"];
-
-            //Obtener las iniciales junto con su nombre
-            string nombreDirector = escuela.NombreDirector;
-            string iniciales = ObtenerIniciales(nombreDirector);
-
-            string tipoI = Request.Form["SelectorSP"];
-            if (tipoI == "S")
+            
+            try
             {
-                string tipo = Request.Form["SelectoAL"];
-                if (tipo == "1")
+                //Extraemos los datos de la escuela
+                int IDEscuela = 1;
+                string idEstudiante = Request.Form["idEstudiante"];
+
+                //Hacemos los selects
+                var escuela = _context.Escuelas.FirstOrDefault(x => x.ID  == IDEscuela);
+                var alumno = _context.EstudiantesServicios.FirstOrDefault(x => x.NumeroControl == idEstudiante);
+                var servicioSocial = _context.ServicioSocials.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
+
+                int idIns = servicioSocial.IdInstiServicio;
+                var institucion = _context.Instituciones.FirstOrDefault(x => x.IdInstitucion == idIns);
+                var alumnoP = _context.EstudiantesPracticas.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
+                var servicioPracticas = _context.PracticasProfesionales.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
+
+                //Fechas
+                DateTime FechaInicio = servicioPracticas.FechaInicioPracticas;
+                DateTime FechaTermino = servicioPracticas.FechaTerminoPracticas;
+
+                //Extraemos fechas actuales
+                string añoActual = DateTime.Now.Year.ToString();
+                string diaActual = DateTime.Now.Day.ToString();
+                string mesActual = DateTime.Now.ToString("MMMM");
+
+                //Extraemos numero de folio
+                string NoFolio = Request.Form["noConstancia"];
+
+                //Obtener las iniciales junto con su nombre
+                string nombreDirector = escuela.NombreDirector;
+                string iniciales = ObtenerIniciales(nombreDirector);
+                
+
+                //Importar y transformar en arrays de bytes las imagenes del header
+                var rutaHeader = Path.Combine(_host.WebRootPath, "imagenes", "HEADER.jpg");
+                byte[] imageHeader = System.IO.File.ReadAllBytes(rutaHeader);
+                //Importar y transformar en arrays de bytes las imagenes del footer
+                var rutaFooter = Path.Combine(_host.WebRootPath, "imagenes", "FOOTER.png");
+                byte[] imageFooter = System.IO.File.ReadAllBytes(rutaFooter);
+
+                string tipoI = Request.Form["SelectorSP"];
+                if (tipoI == "S")
                 {
-                    //Obtenemos datos del form
-                    string idEstudiante = Request.Form["idEstudiante"];
-                    
-
-                    try
+                    string tipo = Request.Form["SelectoAL"];
+                    if (tipo == "1")
                     {
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla estudiantes
-                        var alumno = _context.EstudiantesServicios.FirstOrDefault(x => x.NumeroControl == idEstudiante);
-
-                        //En caso de no encotrar mandamos mensaje
-                        if (alumno == null)
-                        {
-                            throw new Exception("El estudiante no se encuentra en la base de datos.");
-                        }
-
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla Servicio social
-                        var servicioSocial = _context.ServicioSocials.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
-
-                        //En caso de no encotrar mandamos mensaje
-                        if (servicioSocial == null)
-                        {
-                            throw new Exception("El servicio social del estudiante no se encuentra en la base de datos.");
-                        }
-
-                        //Transformo los datos de fecha a string
-
-                        DateTime FechaInicio = servicioSocial.FechaInicioServicio;
-                        DateTime FechaTermino = servicioSocial.FechaTerminoServicio;
-
-
-                        // Generamos PDf Hoja de liberacion
+                        // Generamos PDf Hoja Carta de Presentación Servicio Social
                         var data = Document.Create(formato_CP_SS =>
                         {
                             formato_CP_SS.Page(page =>
@@ -109,8 +105,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
-
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
                                     row.RelativeItem().Column(col =>
@@ -143,8 +138,8 @@ namespace CBTIS223_v2.Controllers
                                         //No. de oficio //Modificable
                                         txt.Span("\nOFICIO No. ");
                                         txt.Span(NoFolio);//Modificable
-                                        txt.Span("(CBTis 223) 087");
-                                        txt.Span(" /2023"); //Año en curso - Modificable
+                                        txt.Span("(CBTis 223) 087 ");
+                                        txt.Span(añoActual); //Año en curso - Modificable
 
                                         //Texto personalizado para el Asunto
                                         txt.Span("\nAsunto: Carta de presentación de");
@@ -162,11 +157,11 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().DefaultTextStyle(textoArial).Padding(10).AlignLeft().Text(txt =>
                                     {
 
-                                        txt.Span("JUAN CARLOS CABRERA ZUÑIGA").SemiBold();//Nombre
+                                        txt.Span(institucion.Supervisor).SemiBold();//Nombre
 
                                         txt.Span("\nDIRECTOR GENERAL").SemiBold();
 
-                                        txt.Span("\nCONSORCIO BARCAZÚ").SemiBold();//
+                                        txt.Span("\n"+institucion.Institucion).SemiBold();//
 
 
                                         txt.Span("\nPRESENTE").SemiBold().LetterSpacing(0.2f);//Inicio de la carta de liberación
@@ -266,7 +261,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -274,29 +269,12 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Servicio Presentacion " + idEstudiante +".pdf");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Maneja la excepción, por ejemplo, registrando un mensaje de error
-                        // o redirigiendo a una vista de error
-                        _logger.LogError(ex, "No se encontro y buscas un registro inexi");
-                        return RedirectToAction("Error", "Home", new { message = ex.Message });
-                    }
-                }
-                else
-                {
-                    //Obtenemos datos del form
-                    string idEstudiante = Request.Form["idEstudiante"];
+                        return File(stream, "application/pdf", "C Presentación Servicio " + idEstudiante +".pdf");
 
-                    try
+                    }
+                    else
                     {
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla estudiantes
-                        var alumno = _context.EstudiantesServicios.FirstOrDefault(x => x.NumeroControl == idEstudiante);
 
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla Servicio social
-                        var servicioSocial = _context.ServicioSocials.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
-                       
 
                         //En caso de no encotrar mandamos mensaje
                         if (servicioSocial == null)
@@ -304,16 +282,10 @@ namespace CBTIS223_v2.Controllers
                             throw new Exception("El servicio social del estudiante no se encuentra en la base de datos.");
                         }
 
-                        //Transformo los datos de fecha a string
-
-                        DateTime FechaInicio = servicioSocial.FechaInicioServicio;
-                        DateTime FechaTermino = servicioSocial.FechaTerminoServicio;
-
-
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(document =>
+                        // Generamos PDf Hoja de Constancia de Acreditación de Servicio Social
+                        var data = Document.Create(formato_CA_SS =>
                         {
-                            document.Page(page =>
+                            formato_CA_SS.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -321,13 +293,9 @@ namespace CBTIS223_v2.Controllers
                                 //Fila para el encabezado: Logos de instituciones y datos del plantel
                                 page.Header().Row(row =>
                                 {
-                                    //Importar y transformar en arrays de bytes las imagenes del header
-                                    var rutaHEADER = Path.Combine(_host.WebRootPath, "imagenes/HEADER.jpg");
-                                    byte[] imageHEADER = System.IO.File.ReadAllBytes(rutaHEADER);
 
                                     //Fila para el logo de la SEP y DGETi
-                                    //row.ConstantItem(350).Height(40).Image(imageHEADER);
-                                    row.ConstantItem(350).Height(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -364,7 +332,7 @@ namespace CBTIS223_v2.Controllers
                                         txt.Span(NoFolio).SemiBold()  //No. de constancia
                                         .FontFamily("Arial").FontSize(12); //Modificable
 
-                                        txt.Span(" (CBTIS No.223)").SemiBold() //Plantel
+                                        txt.Span(" (CBTIS No.223) ").SemiBold() //Plantel
                                         .FontFamily("Arial").FontSize(12); //Modificable
 
                                         txt.Span(añoActual).SemiBold()        //Año
@@ -397,7 +365,7 @@ namespace CBTIS223_v2.Controllers
                                     });
 
                                     //Columna los datos del Director General
-                                    col1.Item().AlignLeft().Text("RUBÉN NÚÑEZ MERCADO")
+                                    col1.Item().AlignLeft().Text(escuela.NombreDirectorGeneralProfesiones)
                                     .SemiBold().FontFamily("Arial").FontSize(12);//Nombre
 
                                     col1.Item().AlignLeft().Text("C. DIRECTOR GENERAL DE PROFESIONES")
@@ -544,13 +512,8 @@ namespace CBTIS223_v2.Controllers
                                 page.Footer().Row(row2 =>
                                 {
 
-                                    //Importar y transformar en arrays de bytes la imagen del footer
-                                    var rutafooter = Path.Combine(_host.WebRootPath, "imagenes/FOOTER.png");
-                                    byte[] imageFooter = System.IO.File.ReadAllBytes(rutafooter);
-
                                     //Fila para la imagen de la piecera
-                                    //row2.ConstantItem(530).Height(50).Image(imageFooter);
-                                    row2.ConstantItem(530).Height(50).Placeholder();
+                                    row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
 
                                 });
                             });
@@ -558,30 +521,14 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Servicio Liberacion " + idEstudiante +".pdf");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Maneja la excepción, por ejemplo, registrando un mensaje de error
-                        // o redirigiendo a una vista de error
-                        _logger.LogError(ex, "No se encontro y buscas un registro inexi");
-                        return RedirectToAction("Error", "Home", new { message = ex.Message });
+                        return File(stream, "application/pdf", "C Acreditación Servicio " + idEstudiante +".pdf");
                     }
                 }
-            }
-            else
-            {
-                string tipo = Request.Form["SelectoAL"];
-                if (tipo == "1")
+                else
                 {
-                    //Obtenemos datos del form
-                    string idEstudiante = Request.Form["idEstudiante"];
-
-                    try
+                    string tipo = Request.Form["SelectoAL"];
+                    if (tipo == "1")
                     {
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla estudiantes
-                        var alumno = _context.EstudiantesServicios.FirstOrDefault(x => x.NumeroControl == idEstudiante);
-                        var alumnoP = _context.EstudiantesPracticas.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
 
                         //En caso de no encotrar mandamos mensaje
                         if (alumno == null)
@@ -589,25 +536,16 @@ namespace CBTIS223_v2.Controllers
                             throw new Exception("El estudiante no se encuentra en la base de datos.");
                         }
 
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla Servicio social
-                        var servicioPracticas = _context.PracticasProfesionales.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
-
                         //En caso de no encotrar mandamos mensaje
                         if (servicioPracticas == null)
                         {
                             throw new Exception("El servicio social del estudiante no se encuentra en la base de datos.");
                         }
 
-                        //Transformo los datos de fecha a string
-
-                        DateTime FechaInicio = servicioPracticas.FechaInicioPracticas;
-                        DateTime FechaTermino = servicioPracticas.FechaTerminoPracticas;
-
-
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(formato_CP_SS =>
+                        // Generamos PDf Hoja de Carta de Presentación de Prácticas Profesionales
+                        var data = Document.Create(formato_CP_PP =>
                         {
-                            formato_CP_SS.Page(page =>
+                            formato_CP_PP.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -619,7 +557,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -672,11 +610,11 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().DefaultTextStyle(textoArial).Padding(10).AlignLeft().Text(txt =>
                                     {
 
-                                        txt.Span("JUAN CARLOS CABRERA ZUÑIGA").SemiBold();//Nombre
+                                        txt.Span(institucion.Supervisor).SemiBold();//Nombre
 
                                         txt.Span("\nDIRECTOR GENERAL").SemiBold();
 
-                                        txt.Span("\nCONSORCIO BARCAZÚ").SemiBold();//
+                                        txt.Span("\n" + institucion.Institucion).SemiBold();//
 
 
                                         txt.Span("\nPRESENTE").SemiBold().LetterSpacing(0.2f);//Inicio de la carta de liberación
@@ -718,17 +656,17 @@ namespace CBTIS223_v2.Controllers
                                             "durante el periodo comprendido del ").LetterSpacing(0.05f);
 
                                         txt.Span((FechaInicio.ToString("dd MMMM"+" Del "+ "yyyy")));//Día y Mes de inicio
-                                                                 //Modificable
+                                                                                                    //Modificable
 
                                         txt.Span(" al ");
 
                                         txt.Span((FechaTermino.ToString("dd MMMM"+" Del "+ "yyyy")));//Día, Mes  y Año de termino
-                                                                        //Modificable
+                                                                                                     //Modificable
 
                                         txt.Span(", " + servicioPracticas.actividad_practicas).LetterSpacing(0.05f);
                                     });
 
-                                    
+
 
 
                                     //Columna el texto posterior a las fechas y horarios
@@ -778,7 +716,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -786,28 +724,11 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Practica Presentacion " + idEstudiante +".pdf");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Maneja la excepción, por ejemplo, registrando un mensaje de error
-                        // o redirigiendo a una vista de error
-                        _logger.LogError(ex, "No se encontro y buscas un registro inexi");
-                        return RedirectToAction("Error", "Home", new { message = ex.Message });
-                    }
-                }
-                else
-                {
-                    //Obtenemos datos del form
-                    string idEstudiante = Request.Form["idEstudiante"];
+                        return File(stream, "application/pdf", "C Presentación Prácticas " + idEstudiante +".pdf");
 
-                    try
+                    }
+                    else
                     {
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla estudiantes
-                        var alumno = _context.EstudiantesServicios.FirstOrDefault(x => x.NumeroControl == idEstudiante);
-                        var alumnoP = _context.EstudiantesPracticas.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
-                        //Realizamos busqueda de acuerdo a los datos enviados por el form para la tabla Servicio social
-                        var servicioPracticas = _context.PracticasProfesionales.FirstOrDefault(x => x.EstudianteNc == idEstudiante);
 
                         //En caso de no encotrar mandamos mensaje
                         if (servicioPracticas == null)
@@ -815,16 +736,10 @@ namespace CBTIS223_v2.Controllers
                             throw new Exception("El servicio social del estudiante no se encuentra en la base de datos.");
                         }
 
-                        //Transformo los datos de fecha a string
-
-                        DateTime FechaInicio = servicioPracticas.FechaInicioPracticas;
-                        DateTime FechaTermino = servicioPracticas.FechaTerminoPracticas;
-
-
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(formato_LIB_PP =>
+                        // Generamos PDf Hoja de Constancia de Acreditación de Prácticas Profesionales
+                        var data = Document.Create(formato_CA_PP =>
                         {
-                            formato_LIB_PP.Page(page =>
+                            formato_CA_PP.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -836,7 +751,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -892,7 +807,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().DefaultTextStyle(textoArial).Padding(10).AlignLeft().Text(txt =>
                                     {
 
-                                        txt.Span("EDUARDO ANDRADE SÁNCHEZ").SemiBold();//Nombre
+                                        txt.Span(escuela.NombreDirectorGeneralProfesiones).SemiBold();//Nombre
 
                                         txt.Span("\nC. DIRECTOR GENERAL DE PROFESIONES").SemiBold();
 
@@ -952,7 +867,7 @@ namespace CBTIS223_v2.Controllers
                                     {
                                         txt.Span("\n\nDurante el periodo comprendido de ")
                                         .LetterSpacing(0.01f); ;
-                                        
+
                                         txt.Span((FechaInicio.ToString("dd MMMM"+" Del "+ "yyyy")));//Día y Mes de inicio
                                                                                                     //Modificable
 
@@ -992,7 +907,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -1000,17 +915,18 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Practica Liberacion " + idEstudiante +".pdf");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Maneja la excepción, por ejemplo, registrando un mensaje de error
-                        // o redirigiendo a una vista de error
-                        _logger.LogError(ex, "No se encontro y buscas un registro inexi");
-                        return RedirectToAction("Error", "Home", new { message = ex.Message });
+                        return File(stream, "application/pdf", "C Acreditación Prácticas " + idEstudiante +".pdf");
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Maneja la excepción, por ejemplo, registrando un mensaje de error
+                // o redirigiendo a una vista de error
+                _logger.LogError(ex, "No se encontro y buscas un registro inexi");
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
+            }
+
         }
     }
 }

@@ -10,5 +10,7 @@ namespace CBTIS223_v2.Models
         public string NombreDirector { get; set; } = null!;
         public string NombreEncargadoEstatal { get; set; } = null!;
         public string NombreDirectorGeneral { get; set; } = null!;
+        public string NombreDirectorGeneralProfesiones { get; set; } = null!;
+
     }
 }

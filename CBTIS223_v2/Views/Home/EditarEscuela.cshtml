@@ -101,6 +101,7 @@
                                 <th>Director</th>
                                 <th>Encargado General</th>
                                 <th>Director General</th>
+                                <th>Director General Profesiones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,6 +111,7 @@
                                     <td class="text-center">@Html.DisplayFor(x =>Datos.NombreDirector)</td>
                                     <td class="text-center">@Html.DisplayFor(x =>Datos.NombreEncargadoEstatal)</td>
                                     <td class="text-center">@Html.DisplayFor(x =>Datos.NombreDirectorGeneral)</td>
+                                    <td class="text-center">@Html.DisplayFor(x =>Datos.NombreDirectorGeneralProfesiones)</td>
                                 </tr>
                             
                         </tbody>
@@ -138,6 +140,10 @@
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Director General:</strong></label>
                             <input type="text" class="form-control" id="NombreDirectorGeneral" name="NombreDirectorGeneral" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Institucion" class="form-label"><strong>Director General de Profesiones:</strong></label>
+                            <input type="text" class="form-control" id="NombreDirectorGeneralProfesiones" name="NombreDirectorGeneralProfesiones" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">

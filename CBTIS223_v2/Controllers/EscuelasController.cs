@@ -53,6 +53,7 @@ namespace CBTIS223_v2.Controllers
                 escuela.NombreDirector = modeloE.NombreDirector;
                 escuela.NombreEncargadoEstatal = modeloE.NombreEncargadoEstatal;
                 escuela.NombreDirectorGeneral = modeloE.NombreDirectorGeneral;
+                escuela.NombreDirectorGeneralProfesiones = modeloE.NombreDirectorGeneralProfesiones;
                 await _context.SaveChangesAsync();
                 ViewBag.Succesful = "Datos modificados con exito";
                 return View("../Home/Escuela");

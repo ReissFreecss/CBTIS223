@@ -81,6 +81,9 @@ namespace CBTIS223_v2.Models
                 entity.Property(e => e.NombreEncargadoEstatal)
                     .HasMaxLength(200)
                     .HasColumnName("nombre_encargado_estatal");
+                entity.Property(e => e.NombreDirectorGeneralProfesiones)
+                   .HasMaxLength(200)
+                   .HasColumnName("nombre_director_general_profesiones");
             });
 
             modelBuilder.Entity<EstudiantesPractica>(entity =>
