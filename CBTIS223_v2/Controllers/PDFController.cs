@@ -788,6 +788,7 @@ namespace CBTIS223_v2.Controllers
                     }
                     catch (Exception ex)
                     {
+                        //comentario
                         // Maneja la excepción, por ejemplo, registrando un mensaje de error
                         // o redirigiendo a una vista de error
                         _logger.LogError(ex, "No se encontro y buscas un registro inexi");
