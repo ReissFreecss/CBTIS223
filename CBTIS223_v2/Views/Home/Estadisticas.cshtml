@@ -2,6 +2,8 @@
 
 @{
     Layout = null;
+    cbtis223Context ct = new cbtis223Context();
+    IList<Institucione> instituciones = await ct.GetInstituciones();
 }
 
 <!DOCTYPE html>
@@ -83,30 +85,40 @@
             <div class="row">
                 <div class="col-md-4 mt-4">
                     <h4>Expedir Estadisticas:</h4>
-                    <h5>Ciclo Escolar:</h5>
-                    <select id="Selector" class="form-select mb-4">
-                        <option value="2017-2020">2017-2020</option>
-                        <option value="2020-2023">2020-2023</option>
-                    </select>
+                    <form method="post" asp-action="ExportToExcelEspe" asp-controller="Estadisticas">
+                    <h5> Filtrar por Especialidad y Ciclo escolar</h5>
+                        <div class="col-md-6">
+                            <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
+                            <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
+                        </div>
                     <h5>Especialidad:</h5>
-                    <select id="Selector" class="form-select mb-4">
-                        <option value="PROGRAMACION">PROGRAMACION</option>
-                        <option value="CONSTRUCCION">CONSTRUCCION</option>
-                        <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACION DE ALIMENTOS Y BEBIDAS</option>
-                        <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRAFICO DIGITAL</option>
+                    <select id="Espe" name="Espe" class="form-select mb-4">
+                        <option value="PROGRAMACION">PROGRAMACIÓN</option>
+                        <option value="CONSTRUCCION">CONSTRUCCIÓN</option>
+                        <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACIÓN DE ALIMENTOS Y BEBIDAS</option>
+                        <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRÁFICO DIGITAL</option>
                         <option value="ELECTRICIDAD">ELECTRICIDAD</option>
-                        <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACION DE RECURSOS HUMANOS</option>
+                        <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACIÓN DE RECURSOS HUMANOS</option>
                     </select>
-                    <h5>Institucion:</h5>
-                    <select id="Selector" class="form-select mb-4">
-                        <option value="CBTIS 223">CBTIS 223</option>
-                        <option value="iCBTIS 223">CBTis 136</option>
-                    </select>
-                    <button id="showPdfButton" class="btnclr">Filtrar</button>
+                    <button type="submit" class="btnclr">Filtrar</button>
+                    </form>
                 </div>
-                <!--Visor PDF -->
-                <div class="pdf-container col-md-8">
-                    <iframe id="pdf" width="100%" height="500" frameborder="0"></iframe>
+                <div class="col-md-4 mt-4">
+                    <form method="post" asp-action="ExportToExcelInsti" asp-controller="Estadisticas">
+                    <h5> Filtrar por Institución y Ciclo escolar</h5>
+                    <div class="col-md-6">
+                        <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
+                        <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
+                    </div>
+                    <h5>Institución:</h5>
+                        <select id="Insti" name="Insti" class="form-select mb-4">
+                            @foreach (var item in instituciones)
+                            {
+                                <option value="@item.IdInstitucion">@item.Institucion</option>
+                            }
+                        </select>
+                        <button type="submit" class="btnclr">Filtrar</button>
+                    </form>
                 </div>
             </div>
         </div>
