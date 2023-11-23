@@ -37,8 +37,14 @@ namespace CBTIS223_v2.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Root, jefeVinc, jefeEsc, ofServ, ofPrac, jefeDep")]
+        [Authorize(Roles = "Root, jefeEsc, ofServ, jefeDep")]
         public IActionResult Estadisticas()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Root, jefePra, ofPra, jefeDep")]
+        public IActionResult EstadisticasPra()
         {
             return View();
         }
@@ -56,7 +62,7 @@ namespace CBTIS223_v2.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root, jefeVinc, jefeEsc, ofServ, ofPrac, jefeDep")]
         public IActionResult Institucion()
         {
             return View();

@@ -2,11 +2,12 @@
 
 @{
     Layout = null;
+    cbtis223Context ct = new cbtis223Context();
     List<Institucione> lst = null!;
     using (cbtis223Context db = new cbtis223Context())
     {
         lst = (from d in db.Instituciones
-               where d.TipoInstitucion == "Publica"
+               where d.TipoInstitucion == "Privada"
                select new Institucione
                        {
                            IdInstitucion = d.IdInstitucion,
@@ -25,7 +26,6 @@
                     Selected = true
                 };
     });
-
 }
 
 <!DOCTYPE html>
@@ -109,8 +109,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mt-4">
-                    <h4>Expedir Estadisticas Para Servicio Social:</h4>
-                    <form method="post" asp-action="ExportToExcelEspe" asp-controller="Estadisticas">
+                    <h4>Expedir Estadisticas para Prácticas Profesionales:</h4>
+                    <form method="post" asp-action="ExportToExcelEspe" asp-controller="EstadisticasPra">
                     <h5> Filtrar por Especialidad y Ciclo escolar</h5>
                         <div class="col-md-6">
                             <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
@@ -129,15 +129,14 @@
                     </form>
                 </div>
                 <div class="col-md-4 mt-4">
-                    <form method="post" asp-action="ExportToExcelInsti" asp-controller="Estadisticas">
+                    <form method="post" asp-action="ExportToExcelInsti" asp-controller="EstadisticasPra">
                     <h5> Filtrar por Institución y Ciclo escolar</h5>
                     <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
                     </div>
                     <h5>Institución:</h5>
-                        <h5>Institución:</h5>
-                        @Html.DropDownList("Insti", items, "", new { @class = "form-select" })
+                            @Html.DropDownList("Insti", items, "", new { @class = "form-select" })
                         <button type="submit" class="btnclr">Filtrar</button>
                     </form>
                 </div>
