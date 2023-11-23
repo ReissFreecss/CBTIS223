@@ -58,6 +58,14 @@ namespace CBTIS223_v2.Controllers
             string nombreDirector = escuela.NombreDirector;
             string iniciales = ObtenerIniciales(nombreDirector);
 
+            //Importar y transformar en arrays de bytes las imagenes del header
+            var rutaHeader = Path.Combine(_host.WebRootPath, "imagenes", "HEADER.jpg");
+            byte[] imageHeader = System.IO.File.ReadAllBytes(rutaHeader);
+            //Importar y transformar en arrays de bytes las imagenes del footer
+            var rutaFooter = Path.Combine(_host.WebRootPath, "imagenes", "FOOTER.png");
+            byte[] imageFooter = System.IO.File.ReadAllBytes(rutaFooter);
+
+
             string tipoI = Request.Form["SelectorSP"];
             if (tipoI == "S")
             {
@@ -94,7 +102,7 @@ namespace CBTIS223_v2.Controllers
                         DateTime FechaTermino = servicioSocial.FechaTerminoServicio;
 
 
-                        // Generamos PDf Hoja de liberacion
+                        // Generamos PDf Hoja Carta de Presentación Servicio Social
                         var data = Document.Create(formato_CP_SS =>
                         {
                             formato_CP_SS.Page(page =>
@@ -109,8 +117,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
-
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
                                     row.RelativeItem().Column(col =>
@@ -266,7 +273,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -274,7 +281,7 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Servicio Presentacion " + idEstudiante +".pdf");
+                        return File(stream, "application/pdf", "C Presentación Servicio " + idEstudiante +".pdf");
                     }
                     catch (Exception ex)
                     {
@@ -310,10 +317,10 @@ namespace CBTIS223_v2.Controllers
                         DateTime FechaTermino = servicioSocial.FechaTerminoServicio;
 
 
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(document =>
+                        // Generamos PDf Hoja de Constancia de Acreditación de Servicio Social
+                        var data = Document.Create(formato_CA_SS =>
                         {
-                            document.Page(page =>
+                            formato_CA_SS.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -321,13 +328,9 @@ namespace CBTIS223_v2.Controllers
                                 //Fila para el encabezado: Logos de instituciones y datos del plantel
                                 page.Header().Row(row =>
                                 {
-                                    //Importar y transformar en arrays de bytes las imagenes del header
-                                    var rutaHEADER = Path.Combine(_host.WebRootPath, "imagenes/HEADER.jpg");
-                                    byte[] imageHEADER = System.IO.File.ReadAllBytes(rutaHEADER);
 
                                     //Fila para el logo de la SEP y DGETi
-                                    //row.ConstantItem(350).Height(40).Image(imageHEADER);
-                                    row.ConstantItem(350).Height(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -544,13 +547,8 @@ namespace CBTIS223_v2.Controllers
                                 page.Footer().Row(row2 =>
                                 {
 
-                                    //Importar y transformar en arrays de bytes la imagen del footer
-                                    var rutafooter = Path.Combine(_host.WebRootPath, "imagenes/FOOTER.png");
-                                    byte[] imageFooter = System.IO.File.ReadAllBytes(rutafooter);
-
                                     //Fila para la imagen de la piecera
-                                    //row2.ConstantItem(530).Height(50).Image(imageFooter);
-                                    row2.ConstantItem(530).Height(50).Placeholder();
+                                    row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
 
                                 });
                             });
@@ -558,7 +556,7 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Servicio Liberacion " + idEstudiante +".pdf");
+                        return File(stream, "application/pdf", "C Acreditación Servicio " + idEstudiante +".pdf");
                     }
                     catch (Exception ex)
                     {
@@ -604,10 +602,10 @@ namespace CBTIS223_v2.Controllers
                         DateTime FechaTermino = servicioPracticas.FechaTerminoPracticas;
 
 
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(formato_CP_SS =>
+                        // Generamos PDf Hoja de Carta de Presentación de Prácticas Profesionales
+                        var data = Document.Create(formato_CP_PP =>
                         {
-                            formato_CP_SS.Page(page =>
+                            formato_CP_PP.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -619,7 +617,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -778,7 +776,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -786,10 +784,11 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Practica Presentacion " + idEstudiante +".pdf");
+                        return File(stream, "application/pdf", "C Presentación Prácticas " + idEstudiante +".pdf");
                     }
                     catch (Exception ex)
                     {
+                        //comentario
                         // Maneja la excepción, por ejemplo, registrando un mensaje de error
                         // o redirigiendo a una vista de error
                         _logger.LogError(ex, "No se encontro y buscas un registro inexi");
@@ -821,10 +820,10 @@ namespace CBTIS223_v2.Controllers
                         DateTime FechaTermino = servicioPracticas.FechaTerminoPracticas;
 
 
-                        // Generamos PDf Hoja de liberacion
-                        var data = Document.Create(formato_LIB_PP =>
+                        // Generamos PDf Hoja de Constancia de Acreditación de Prácticas Profesionales
+                        var data = Document.Create(formato_CA_PP =>
                         {
-                            formato_LIB_PP.Page(page =>
+                            formato_CA_PP.Page(page =>
                             {
                                 page.Margin(30);
 
@@ -836,7 +835,7 @@ namespace CBTIS223_v2.Controllers
                                 page.Header().Row(row =>
                                 {
                                     //Fila para el logo de la SEP y DGETi
-                                    row.ConstantItem(350).MaxWidth(350).MaxHeight(40).Placeholder();
+                                    row.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageHeader);
 
 
                                     //Fila con columnas interrnas para los datos del plantel CBTis No. 223
@@ -992,7 +991,7 @@ namespace CBTIS223_v2.Controllers
                                     col1.Item().Row(row2 =>
                                     {
                                         //Fila para la imagen de la piecera
-                                        row2.ConstantItem(530).Height(60).Placeholder();
+                                        row2.RelativeItem().MaxHeight(750).MaxWidth(7950).Image(imageFooter);
                                     });
                                 });
                             });
@@ -1000,7 +999,7 @@ namespace CBTIS223_v2.Controllers
                         }).GeneratePdf();
 
                         Stream stream = new MemoryStream(data);
-                        return File(stream, "application/pdf", "Hoja Practica Liberacion " + idEstudiante +".pdf");
+                        return File(stream, "application/pdf", "C Acreditación Prácticas " + idEstudiante +".pdf");
                     }
                     catch (Exception ex)
                     {
