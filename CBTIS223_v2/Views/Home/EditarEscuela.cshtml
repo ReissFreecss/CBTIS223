@@ -125,24 +125,24 @@
                         <input type="hidden" asp-for="ID" />
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Escuela:</strong></label>
-                            <input type="text" class="form-control" id="NombreEscuela" name="NombreEscuela" value="@Datos.NombreEscuela" required readonly>
+                            <input type="text" class="form-control" id="NombreEscuela" name="NombreEscuela" value="@Datos.NombreEscuela" oninput="this.value = this.value.toUpperCase()"  required readonly>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Director</strong></label>
-                            <input type="text" class="form-control" id="NombreDirector" name="NombreDirector" required>
+                            <input type="text" class="form-control" id="NombreDirector" name="NombreDirector" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="mb-3">
                             <label for="Responsable" class="form-label"><strong>Responsable Estatal :</strong></label>
-                            <input type="text" class="form-control" id="NombreEncargadoEstatal" name="NombreEncargadoEstatal" required>
+                            <input type="text" class="form-control" id="NombreEncargadoEstatal" name="NombreEncargadoEstatal" oninput="this.value = this.value.toUpperCase()"  required>
                         </div>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>Director General:</strong></label>
-                            <input type="text" class="form-control" id="NombreDirectorGeneral" name="NombreDirectorGeneral" required>
+                            <input type="text" class="form-control" id="NombreDirectorGeneral" name="NombreDirectorGeneral" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
                                 <div class="button-row text-md-start text-center">
-                                    <button type="button" class="btn w-75 btnclr">Limpiar</button>
+                                    <button type="reset" class="btn w-75 btnclr">Limpiar</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
