@@ -4,6 +4,15 @@
     Layout = null;
 }
 
+<div style="color:red">
+    <!-- Muestra un mensaje de error en color rojo -->
+    <strong>@ViewBag.Error</strong>
+</div>
+<div style="color:green">
+    <!-- Muestra un mensaje de exito en color verde -->
+    <strong>@ViewBag.Succesful</strong>
+</div>
+
 <!DOCTYPE html>
 <html>
 
@@ -90,13 +99,13 @@
                         <input type="text" class="form-control mb-4" name="idEstudiante" pattern="\d{14}" placeholder="Ej. 20330051420002" required>
                         <h5>Tipo:</h5>
                         <select id="Selector" name="SelectorSP" class="form-select mb-4">
-                            <option value="S">Servicio Social</option>
-                            <option value="P">Prácticas Profesional</option>
+                            <option value="Servicio">Servicio Social</option>
+                            <option value="Practicas">Prácticas Profesional</option>
                         </select>
                         <h5>Tramite:</h5>
                         <select id="Selector" name="SelectoAL" class="form-select mb-4">
-                            <option value="1">Carta de aceptacion</option>
-                            <option value="2">Carta de liberacion</option>
+                            <option value="Aceptacion">Carta de aceptacion</option>
+                            <option value="Liberacion">Carta de liberacion</option>
                         </select>
 
                         <h5>No. de Constancia: </h5>
