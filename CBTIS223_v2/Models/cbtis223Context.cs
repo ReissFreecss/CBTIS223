@@ -159,9 +159,29 @@ namespace CBTIS223_v2.Models
                     .HasMaxLength(200)
                     .HasColumnName("tipo_institucion");
 
-                entity.Property(e => e.UbicacionInstitucion)
+                entity.Property(e => e.Calle)
                     .HasMaxLength(255)
-                    .HasColumnName("ubicacion_institucion");
+                    .HasColumnName("calle");
+
+                entity.Property(e => e.NoCalle)
+                    .HasMaxLength(255)
+                    .HasColumnName("no_calle");
+
+                entity.Property(e => e.CodigoPostal)
+                    .HasMaxLength(255)
+                    .HasColumnName("codigo_postal");
+
+                entity.Property(e => e.Colonia)
+                    .HasMaxLength(255)
+                    .HasColumnName("colonia");
+
+                entity.Property(e => e.Municipio)
+                    .HasMaxLength(255)
+                    .HasColumnName("municipio");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(255)
+                    .HasColumnName("estado");
             });
 
             modelBuilder.Entity<PracticasProfesionale>(entity =>

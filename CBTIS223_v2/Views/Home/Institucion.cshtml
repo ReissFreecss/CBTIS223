@@ -129,8 +129,28 @@
                             <input type="text" class="form-control" id="Supervisor" name="Supervisor" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="mb-3">
-                            <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
-                            <input type="text" class="form-control" id="UbicacionInstitucion" name="UbicacionInstitucion" placeholder="Calle #Exterior, Colonia, Municipio, Estado"  oninput="this.value = this.value.toUpperCase()" required>
+                            <label for="Calle" class="form-label"><strong>Calle:</strong></label>
+                            <input type="text" class="form-control" id="Calle" name="Calle" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="NoCalle" class="form-label"><strong>No. Calle:</strong></label>
+                            <input type="text" class="form-control" id="NoCalle" name="NoCalle" pattern="[0-9]{1,10}" title="El formato debe ser numerico Ej. 112" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="CodigoPostals" class="form-label"><strong>Codigo Postal:</strong></label>
+                            <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" pattern="[0-9]{5}" title="El formato debe ser numerico Ej. 12345" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Colonia" class="form-label"><strong>Colonia:</strong></label>
+                            <input type="text" class="form-control" id="Colonia" name="Colonia" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Municipio" class="form-label"><strong>Municipio:</strong></label>
+                            <input type="text" class="form-control" id="Municipio" name="Municipio" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Estado" class="form-label"><strong>Estado:</strong></label>
+                            <input type="text" class="form-control" id="Estado" name="Estado" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
@@ -152,7 +172,12 @@
                                 <th>Institución</th>
                                 <th>Tipo</th>
                                 <th>Responsable</th>
-                                <th>Ubicación</th>
+                                <th>Calle</th>
+                                <th>NoCalle</th>
+                                <th>CodigoPostal</th>
+                                <th>Colonia</th>
+                                <th>Municipio</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -164,7 +189,12 @@
                                     <td>@item.Institucion</td>
                                     <td>@item.TipoInstitucion</td>
                                     <td>@item.Supervisor</td>
-                                    <td>@item.UbicacionInstitucion</td>
+                                    <td>@item.Calle</td>
+                                    <td>@item.NoCalle</td>
+                                    <td>@item.CodigoPostal</td>
+                                    <td>@item.Colonia</td>
+                                    <td>@item.Municipio</td>
+                                    <td>@item.Estado</td>
                                     <td>
                                         <a asp-action="Editar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Editar</a>
                                         <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Eliminar</a>

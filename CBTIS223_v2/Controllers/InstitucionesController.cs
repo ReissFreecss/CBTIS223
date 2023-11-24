@@ -53,9 +53,9 @@ namespace CBTIS223_v2.Controllers
 
         [HttpPost]
         public async Task<IActionResult> InsertarInstitucion(
-            [Bind("IdInstitucion", "Institucion", "TipoInstitucion", "Supervisor", "UbicacionInstitucion")] Institucione modelI)
+            [Bind("IdInstitucion", "Institucion", "TipoInstitucion", "Supervisor", "Calle", "NoCalle", "CodigoPostal", "Colonia", "Municipio", "Estado")] Institucione modelI)
         {
-            _logger.LogInformation(modeloI.IdInstitucion+" "+modeloI.Institucion+" "+modeloI.TipoInstitucion+" "+modeloI.Supervisor+" *"+modeloI.UbicacionInstitucion);
+            _logger.LogInformation(modeloI.IdInstitucion+" "+modeloI.Institucion+" "+modeloI.TipoInstitucion+" "+modeloI.Supervisor+" "+modeloI.Calle+" "+modeloI.NoCalle+" "+modeloI.CodigoPostal+" "+modeloI.Colonia+" "+modeloI.Municipio+" "+modeloI.Estado+" *"+modeloI.Estado);
             _context.Add(modeloI);
             await _context.SaveChangesAsync();
             return View("../Home/Institucion");

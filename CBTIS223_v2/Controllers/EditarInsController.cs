@@ -48,7 +48,14 @@ namespace CBTIS223_v2.Controllers
                 institucion.Institucion = modeloI.Institucion;
                 institucion.TipoInstitucion = modeloI.TipoInstitucion;
                 institucion.Supervisor = modeloI.Supervisor;
-                institucion.UbicacionInstitucion = modeloI.UbicacionInstitucion;
+                institucion.Calle = modeloI.Calle;
+                institucion.NoCalle = modeloI.NoCalle;
+                institucion.CodigoPostal = modeloI.CodigoPostal;
+                institucion.Colonia = modeloI.Colonia;
+                institucion.Municipio = modeloI.Municipio;
+                institucion.Estado= modeloI.Estado;
+
+
                 await _context.SaveChangesAsync();
                 ViewBag.Succesful = "Datos modificados con exito";
                 return View("../Home/Institucion");

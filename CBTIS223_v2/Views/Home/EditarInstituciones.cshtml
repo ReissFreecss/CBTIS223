@@ -69,8 +69,28 @@
                             <input type="text" class="form-control" id="Supervisor" value="@Datos.Supervisor" name="Supervisor" required>
                         </div>
                         <div class="mb-3">
-                            <label for="Institucion" class="form-label"><strong>Ubicacion:</strong></label>
-                            <input type="text" class="form-control" id="UbicacionInstitucion" value="@Datos.UbicacionInstitucion" name="UbicacionInstitucion" required>
+                            <label for="Calle" class="form-label"><strong>Calle:</strong></label>
+                            <input type="text" class="form-control" id="Calle" value="@Datos.Calle" name="Calle" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="NoCalle" class="form-label"><strong>No. Calle:</strong></label>
+                            <input type="text" class="form-control" id="NoCalle" value="@Datos.NoCalle" name="NoCalle"  pattern="[0-9]{1,10}" title="El formato debe ser numerico Ej. 112" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="CodigoPostals" class="form-label"><strong>Codigo Postal:</strong></label>
+                            <input type="text" class="form-control" id="CodigoPostal" value="@Datos.CodigoPostal" name="CodigoPostal" pattern="[0-9]{5}" title="El formato debe ser numerico Ej. 12345" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="Colonia" class="form-label"><strong>Colonia:</strong></label>
+                            <input type="text" class="form-control" id="Colonia" value="@Datos.Colonia" name="Colonia" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="Municipio" class="form-label"><strong>Municipio:</strong></label>
+                            <input type="text" class="form-control" id="Municipio" value="@Datos.Municipio" name="Municipio" oninput="this.value = this.value.toUpperCase()" required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="Estado" class="form-label"><strong>Estado:</strong></label>
+                            <input type="text" class="form-control" id="Estado" value="@Datos.Estado" name="Estado" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
