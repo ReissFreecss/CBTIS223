@@ -1,55 +1,103 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CBTIS223_v2</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CBTIS223_v2.styles.css" asp-append-version="true" />
+    <title>@ViewBag.Title - CBTis 223</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- Bootstrap-datepicker CSS
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">-->
+    <!-- Bootstrap-datepicker
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>-->
+    <!-- JS
+    <script src="~/js/periodo.js"></script>-->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/formato.css" />
+
+    <!-- Font Awesome CSS para uso de iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CBTIS223_v2</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadisticas</a>
-                        </li>
-                    </ul>
-                </div>
+
+<body class="bg-white">
+    <div class="wrapper">
+        <!-- Barra de navegacion -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+            <a class="navbar-brand" href="#">
+                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
+            </a>
+            <!-- Boton donde colapsa el menu al ser minimizado-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Clase que permite colapsar al menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        <!-- Oculta el boton para cualquier rol fuera de esta lista -->
+                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="EstadisticasPra">Estadísticas Prac</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
+                    </li>
+                </ul>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - CBTIS223_v2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @RenderBody()
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <footer>
+            <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
+            <p>Contacto: </p>
+        </footer>
+    </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

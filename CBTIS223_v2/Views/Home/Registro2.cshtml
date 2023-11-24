@@ -2,7 +2,8 @@
 @model Institucione
 @{
     List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
-    Layout = null;
+    ViewBag.Title = "Prácticas Profesionales";
+    Layout = "_Layout";
 }
 
 <div style="color:red">
@@ -13,125 +14,25 @@
     <!-- Muestra un mensaje de exito en color verde -->
     <strong>@ViewBag.Succesful</strong>
 </div>
-
-<!DOCTYPE HTML>
-<html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<head>
-    <title>Practicas Profesionales</title>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-
-    <!-- Bootstrap-datepicker CSS 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-    -->
-    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- Bootstrap-datepicker -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-
-    <!-- JS 
-    <script src="~/js/periodo.js"></script> -->
-
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="~/css/registro.css" />
-
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-</head>
-
-<body class="bg-white">
-    <div class="wrapper">
-        <!-- Barra de navegacion -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-            <a class="navbar-brand" href="#">
-                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
-            </a>
-            <!-- Boton donde colapsa el menu al ser minimizado-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Clase que permite colapsar al menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <!-- Oculta el boton para cualquier rol fuera de esta lista -->
-                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="EstadisticasPra">Estadísticas Prac</a>
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="container">
             <form method="post" asp-action="obtenerDatos" asp-controller="Registros2">
+
                 <!--Numero de control y Nombre-->
                 <div class="row mb-3">
-                    <h4 class="mt-4">Registro Practicas Profesionales</h4>
+        <h4 class="mt-4">Registro de Prácticas Profesionales</h4>
                     <div class="col-md-6">
-                        <label for="NumeroControl" class="form-label"><strong>Numero de Control:</strong></label>
+                        <label for="NumeroControl" class="form-label"><strong>Número de Control:</strong></label>
                         <input type="text" class="form-control" placeholder="Ej. 20330051420002" id="NumeroControl" name="NumeroControl" required>
                     </div>
+                </div>
+
                 <!--Botones-->
                 <div class="row mb-3 mb-4">
-                    <div class="col-md-6">
-                        <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
+                    <div class="col-md-6 mb-3">
+                        <button type="reset" class="btn w-25 btnclr button-row">Limpiar</button>
                     </div>
-                    <div class="col-md-6 text-end">
+                    <div class="col-md-6 mb-3 text-end">
                         <button type="submit" class="btn w-25 btnclr button-row">Buscar Alumno</button>
                     </div>
                 </div>
 
             </form>
-        </div>
-        <footer>
-            <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
-            <p>Contacto: </p>
-        </footer>
-    </div>
-</body>
-
-</html>

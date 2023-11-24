@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @{
 
-    Layout = null;
+    ViewBag.Title = "Documentos";
+    Layout = "_Layout";
 }
 
 <div style="color:red">
@@ -13,82 +14,6 @@
     <strong>@ViewBag.Succesful</strong>
 </div>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Documentos</title>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="~/css/documentos.css" />
-
-    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
-</head>
-<body class="bg-white">
-    <div class="wrapper">
-        <!-- Barra de navegacion -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-            <a class="navbar-brand" href="#">
-                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
-            </a>
-            <!-- Boton donde colapsa el menu al ser minimizado-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Clase que permite colapsar al menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <!-- Oculta el boton para cualquier rol fuera de esta lista -->
-                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="EstadisticasPra">Estadísticas Prac</a>
-                    </li>
-                    <li class="nav-item">
-                        <!--Todos pueden ver las instituciones y registrar instituciones-->
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="container">
             <div class="row">
                 <div class="col-md-4 mt-4">
                     <h4>Expedir documentos:</h4>
@@ -104,8 +29,8 @@
                         </select>
                         <h5>Tramite:</h5>
                         <select id="Selector" name="SelectoAL" class="form-select mb-4">
-                            <option value="Aceptacion">Carta de aceptacion</option>
-                            <option value="Liberacion">Carta de liberacion</option>
+                            <option value="Aceptacion">Carta de aceptación</option>
+                            <option value="Liberacion">Carta de liberación</option>
                         </select>
 
                         <h5>No. de Constancia: </h5>
@@ -125,12 +50,3 @@
                     </iframe>
                 </div>
             </div>
-        </div>
-        <footer>
-            <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
-            <p>Contacto: </p>
-        </footer>
-    </div>
-</body>
-
-</html>
