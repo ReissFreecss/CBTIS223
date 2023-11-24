@@ -14,12 +14,12 @@
                     <div class="col-md-6">
                         <input type="hidden" asp-for="NumeroControl" />
                         <div class="form-group">
-                            <label asp-for="NumeroControl" class="form-label"><strong>NUMERO DE CONTROL</strong></label>
+                <label asp-for="NumeroControl" class="form-label"><strong>Número de Control:</strong></label>
                             <input asp-for="NumeroControl" class="form-control" readonly/>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="Nombre" class="form-label"><strong>NOMBRE(s)</strong> </label>
+            <label for="Nombre" class="form-label"><strong>Nombre(s) del Alumno:</strong> </label>
                         <input type="text" class="form-control" id="Nombre" name="Nombre"  value="@Estudiante.Nombre" readonly/>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <!--Apellidos-->
                 <div class="row mb-3">
                     <div class="col-md-6 ">
-                        <label for="Apellidos" class="form-label"><strong>APELLIDO(s)</strong> </label>
+            <label for="Apellidos" class="form-label"><strong>Apellidos del Alumno:</strong> </label>
                         <input type="text" class="form-control" id="Apellidos" name="Apellidos" value="@Estudiante.Apellidos" readonly />
                     </div>
                 </div>
@@ -35,12 +35,12 @@
                 <!--CURP y Especialidad-->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="ApellidoPaterno" class="form-label"><strong>CURP</strong> </label>
+                        <label for="ApellidoPaterno" class="form-label"><strong>CURP:</strong> </label>
                         <input type="text" class="form-control" id="Curp" name="Curp" value="@Estudiante.Curp" readonly />
                     </div>
 
                     <div class="col-md-6">
-                        <label for="ApellidoPaterno" class="form-label"><strong>ESPECIALIDAD</strong> </label>
+            <label for="ApellidoPaterno" class="form-label"><strong>Especialidad:</strong> </label>
                         <input type="text" class="form-control" id="Especialidad" name="Especialidad" value="@Estudiante.Especialidad" readonly />
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                 <!--Ciclo Escolar-->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="Ciclo" class="form-label"><strong>CICLO ESCOLAR</strong> </label>
+            <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong> </label>
                         <input type="text" class="form-control" id="Ciclo" name="Ciclo" value="@Estudiante.Ciclo" readonly />
                     </div>
                 </div>
@@ -59,14 +59,14 @@
                     <div class="col-md-6">
                         <!-- Seleccionar institucion -->
                         <div class="col-md-6">
-                            <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institucion</strong> </label>
+                <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institución:</strong> </label>
                             @Html.DropDownList("IdInstiPracticas",items,"",new {@class="form-select"})
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <!--Lectura de actividad que realiza el alumno en su servicio-->
-                        <label for="Actividad_Servicio" class="form-label"><strong>Actividad que realiza:</strong> </label>
+            <label for="Actividad_Servicio" class="form-label"><strong>Actividad que Realiza:</strong> </label>
                         <input type="text" class="form-control" id="actividad_practicas" name="actividad_practicas"
                                oninput="this.value = this.value.toUpperCase()" required>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="FechaInicio" class="form-label"><strong>Fecha Inicio:</strong></label>
+                            <label for="FechaInicio" class="form-label"><strong>Fecha de Inicio:</strong></label>
                             <div class="input-group">
                                 <input type="date" id="FechaInicio" pattern="\d{4}/\d{2}/\d{2}" placeholder="aaaa/mm/dd" name="FechaInicioPracticas" class="form-control" required>
                                 <!--<div class="input-group-append">

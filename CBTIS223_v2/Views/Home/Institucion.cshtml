@@ -21,27 +21,27 @@
                 <!-- Left Column: User Creation -->
                 <div class="col-md-4">
                     <form method="post" asp-action="InsertarInstitucion" asp-controller="Instituciones">
-                        <h4 class="mt-4">Institucion CRUD</h4>
+            <h4 class="mt-4">Institución CRUD</h4>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>ID:</strong></label>
                             <input type="number" class="form-control" id="IdInstitucion" name="IdInstitucion" required>
                         </div>
                         <div class="mb-3">
-                            <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
+                <label for="Institucion" class="form-label"><strong>Institución:</strong></label>
                             <input type="text" class="form-control" id="Institucion" name="Institucion" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label for="Tipo" class="form-label"><strong>Tipo:</strong></label>
                                 <select class="form-select" id="TipoInstitucion" name="TipoInstitucion" required>
-                                    <option selected>Selecciona el tipo de institucion</option>
+                        <option selected>Selecciona el tipo de institución</option>
                                     <option value="Publica">Publica</option>
                                     <option value="Privada">Privada</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
+                <label for="Responsable" class="form-label"><strong>Responsable de la Institución:</strong></label>
                             <input type="text" class="form-control" id="Supervisor" name="Supervisor" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
                         <div class="mb-3">
@@ -53,7 +53,7 @@
                             <input type="text" class="form-control" id="NoCalle" name="NoCalle" pattern="[0-9]{1,10}" title="El formato debe ser numerico Ej. 112" required>
                         </div>
                         <div class="mb-3">
-                            <label for="CodigoPostals" class="form-label"><strong>Codigo Postal:</strong></label>
+                <label for="CodigoPostals" class="form-label"><strong>Código Postal:</strong></label>
                             <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" pattern="[0-9]{5}" title="El formato debe ser numerico Ej. 12345" required>
                         </div>
                         <div class="mb-3">
@@ -68,11 +68,11 @@
                             <label for="Estado" class="form-label"><strong>Estado:</strong></label>
                             <input type="text" class="form-control" id="Estado" name="Estado" oninput="this.value = this.value.toUpperCase()" required>
                         </div>
-                        <div class="row mb-3 mb-4">
-                            <div class="col-md-6">
-                                <div class="button-row text-md-end text-center">
-                                    <button type="submit" class="btn w-75 btnclr">Crear</button>
-                                </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="button-row text-md-end text-center">
+                        <button type="submit" class="btn w-100 btnclr">Crear</button>
+                    </div>
                             </div>
                         </div>
                     </form>
@@ -90,7 +90,7 @@
                                 <th>Responsable</th>
                                 <th>Calle</th>
                                 <th>NoCalle</th>
-                                <th>CodigoPostal</th>
+                                <th>Código Postal</th>
                                 <th>Colonia</th>
                                 <th>Municipio</th>
                                 <th>Estado</th>

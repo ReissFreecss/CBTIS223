@@ -46,13 +46,13 @@
                 <!-- Left Column: User Creation -->
                 <div class="col-md-4">
                     <form method="post" asp-action="EditarInstitucion" asp-controller="EditarIns">
-                        <h4 class="mt-4">Editar Institucion</h4
+                        <h4 class="mt-4">Editar Institución</h4>
                         <div class="mb-3">
                             <label for="Institucion" class="form-label"><strong>ID</strong></label>
                             <input type="text" class="form-control" id="IdInstitucion" name="IdInstitucion" value="@Datos.IdInstitucion" required readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="Institucion" class="form-label"><strong>Institucion:</strong></label>
+                            <label for="Institucion" class="form-label"><strong>Institución:</strong></label>
                             <input type="text" class="form-control" id="Institucion" value="@Datos.Institucion" name="Institucion" required>
                         </div>
                         <div class="row mb-3">
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="Responsable" class="form-label"><strong>Responsable de la institucion:</strong></label>
+                            <label for="Responsable" class="form-label"><strong>Responsable de la Institución:</strong></label>
                             <input type="text" class="form-control" id="Supervisor" value="@Datos.Supervisor" name="Supervisor" required>
                         </div>
                         <div class="mb-3">
@@ -78,7 +78,7 @@
                             <input type="text" class="form-control" id="NoCalle" value="@Datos.NoCalle" name="NoCalle"  pattern="[0-9]{1,10}" title="El formato debe ser numerico Ej. 112" required>
                         </div>
                          <div class="mb-3">
-                            <label for="CodigoPostals" class="form-label"><strong>Codigo Postal:</strong></label>
+                            <label for="CodigoPostals" class="form-label"><strong>Código Postal:</strong></label>
                             <input type="text" class="form-control" id="CodigoPostal" value="@Datos.CodigoPostal" name="CodigoPostal" pattern="[0-9]{5}" title="El formato debe ser numerico Ej. 12345" required>
                         </div>
                          <div class="mb-3">
@@ -96,7 +96,7 @@
                         <div class="row mb-3 mb-4">
                             <div class="col-md-6">
                                 <div class="button-row text-md-end text-center">
-                                    <button type="submit" class="btn w-75 btnclr">Crear</button>
+                                    <button type="submit" class="btn w-100 btnclr">Crear</button>
                                 </div>
                             </div>
                         </div>
