@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
 @{
-    Layout = null;
+    ViewBag.Title = "Estadisticas PP";
+    Layout = "_Layout";
     cbtis223Context ct = new cbtis223Context();
     List<Institucione> lst = null!;
     using (cbtis223Context db = new cbtis223Context())
@@ -27,126 +28,63 @@
                 };
     });
 }
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Estadisticas</title>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="~/css/documentos.css" />
-
-    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
-</head>
-
-<body class="bg-white">
-    <div class="wrapper">
-        <!-- Barra de navegacion -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-            <a class="navbar-brand" href="#">
-                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
-            </a>
-            <!-- Boton donde colapsa el menu al ser minimizado-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Clase que permite colapsar al menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <!-- Oculta el boton para cualquier rol fuera de esta lista -->
-                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="EstadisticasPra">Estadísticas Prac</a>
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mt-4">
-                    <h4>Expedir Estadisticas para Prácticas Profesionales:</h4>
-                    <form method="post" asp-action="ExportToExcelEspe" asp-controller="EstadisticasPra">
-                    <h5> Filtrar por Especialidad y Ciclo escolar</h5>
-                        <div class="col-md-6">
-                            <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
-                            <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
-                        </div>
-                    <h5>Especialidad:</h5>
-                    <select id="Espe" name="Espe" class="form-select mb-4">
-                        <option value="PROGRAMACION">PROGRAMACIÓN</option>
-                        <option value="CONSTRUCCION">CONSTRUCCIÓN</option>
-                        <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACIÓN DE ALIMENTOS Y BEBIDAS</option>
-                        <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRÁFICO DIGITAL</option>
-                        <option value="ELECTRICIDAD">ELECTRICIDAD</option>
-                        <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACIÓN DE RECURSOS HUMANOS</option>
-                    </select>
-                    <button type="submit" class="btnclr">Filtrar</button>
-                    </form>
-                </div>
-                <div class="col-md-4 mt-4">
-                    <form method="post" asp-action="ExportToExcelInsti" asp-controller="EstadisticasPra">
-                    <h5> Filtrar por Institución y Ciclo escolar</h5>
+            <!--Form para estadisticas C.E Especialidad-->
+            <form method="post" asp-action="ExportToExcelEspe" asp-controller="EstadisticasPra">
+                <!--Ciclo escolar y especialidad-->
+                <div class="row mb-3">
+                    <h4 class="mt-4">Expedir Estadisticas para Prácticas Profesionales:</h4>
+                    <h5>Filtrar por Ciclo Escolar y Especialidad</h5>
                     <div class="col-md-6">
                         <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
                         <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
                     </div>
-                    <h5>Institución:</h5>
-                            @Html.DropDownList("Insti", items, "", new { @class = "form-select" })
-                        <button type="submit" class="btnclr">Filtrar</button>
-                    </form>
+                    <div class="col-md-6">
+                        <label for="Espe" class="form-label"><strong>Especialidad:</strong></label>
+                        <select id="Espe" name="Espe" class="form-select">
+                            <option value="PROGRAMACION">PROGRAMACIÓN</option>
+                            <option value="CONSTRUCCION">CONSTRUCCIÓN</option>
+                            <option value="PREPARACION DE ALIMENTOS Y BEBIDAS">PREPARACIÓN DE ALIMENTOS Y BEBIDAS</option>
+                            <option value="DISEÑO GRAFICO DIGITAL">DISEÑO GRÁFICO DIGITAL</option>
+                            <option value="ELECTRICIDAD">ELECTRICIDAD</option>
+                            <option value="ADMINISTRACION DE RECURSOS HUMANOS">ADMINISTRACIÓN DE RECURSOS HUMANOS</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <footer>
-            <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
-            <p>Contacto: </p>
-        </footer>
-    </div>
-</body>
 
-</html>
+                <!--Botones-->
+                <div class="row mb-3 mb-4">
+                    <div class="col-md-6">
+                        <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="submit" class="btn w-25 btnclr button-row">Filtrar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!--Form para estadisticas C.E Institucion-->
+            <form method="post" asp-action="ExportToExcelInsti" asp-controller="EstadisticasPra">
+                <!--Ciclo Escolar--> <!--Institucion-->
+                <div class="row mb-3">
+                    <h5>Filtrar por Ciclo Escolar e Institución</h5>
+                    <div class="col-md-6">
+                        <label for="Ciclo" class="form-label"><strong>Ciclo Escolar:</strong></label>
+                        <input type="text" class="form-control" pattern="^(19|20)\d{2}-(19|20)\d{2}$" placeholder="Ej. 2022-2023" id="CicloForm" name="CicloForm" title="Formato de fecha incorrecto, Ejemplo: 2022-2023 " required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="IdInstiServicio" class="form-label"><strong>Selecciona la Institución:</strong> </label>
+                        @Html.DropDownList("Insti", items, "", new { @class = "form-select" })
+                    </div>
+                </div>
+
+                <!--Botones-->
+                <div class="row mb-3 mb-4">
+                    <div class="col-md-6">
+                        <button type="reset" class="btn w-25 btnclr button-row ">Limpiar</button>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="submit" class="btn w-25 btnclr button-row">Filtrar</button>
+                    </div>
+                </div>
+            </form>

@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CBTIS223_v2.Models
 @{
-    ViewData["Title"] = "Institucion";
-    Layout = null;
+   //ViewData["Title"] = "Institucion";
+    ViewBag.Title = "Instituciones";
+    Layout = "_Layout";
     cbtis223Context ct = new cbtis223Context();
     IList<Institucione> instituciones = await ct.GetInstituciones();
 }
@@ -16,91 +17,6 @@
     <strong>@ViewBag.Succesful</strong>
 </div>
 
-<!DOCTYPE HTML>
-<html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<head>
-    <title>CRUD Institución</title>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-
-    <!-- Bootstrap JavaScript and Popper.js -->  <!-- Permite funcionar el menu minimizado -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="~/css/institucion.css" asp-append-version="true" />
-
-    <!-- Font Awesome CSS -->
-    <script src="https://kit.fontawesome.com/1ca77c727c.js" crossorigin="anonymous"></script>
-
-</head>
-
-<body class="bg-white">
-    <div class="wrapper">
-        <!-- Barra de navegacion -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-            <a class="navbar-brand" href="#">
-                <img src="~/imagenes/cbtis.jpg" alt="Logo" class="navbar-logo">
-            </a>
-            <!-- Boton donde colapsa el menu al ser minimizado-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Clase que permite colapsar al menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <!-- Oculta el boton para cualquier rol fuera de esta lista -->
-                        @if (User.IsInRole("jefeVinc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofPrac"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro2">Practicas Profesionales</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("jefeEsc") || User.IsInRole("Root") || User.IsInRole("jefeDep") || User.IsInRole("ofServ"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Registro">Servicio Social</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Documentos">Documentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Estadisticas">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="EstadisticasPra">Estadísticas Prac</a>
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Institucion">Instituciones</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (User.IsInRole("Root"))
-                        {
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Escuela">Datos Escolares</a>
-                        }
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Login">Cerrar sesion</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="container">
             <div class="row">
                 <!-- Left Column: User Creation -->
                 <div class="col-md-4">
@@ -196,8 +112,8 @@
                                     <td>@item.Municipio</td>
                                     <td>@item.Estado</td>
                                     <td>
-                                        <a asp-action="Editar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Editar</a>
-                                        <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btn-primary btn-sm" asp-route-id="@item.IdInstitucion">Eliminar</a>
+                                        <a asp-action="Editar" asp-controller="Instituciones" class="btn btnclr btn-sm mb-1" asp-route-id="@item.IdInstitucion">Editar</a>
+                                        <a asp-action="Eliminar" asp-controller="Instituciones" class="btn btnclr btn-sm" asp-route-id="@item.IdInstitucion">Eliminar</a>
                                     </td> 
                                 </tr>
                             }
@@ -205,11 +121,3 @@
                     </table>
                 </div>
             </div>
-            <footer>
-                <p>CBtis 223 &copy; 2023. Todos los derechos reservados.</p>
-                <p>Contacto: </p>
-            </footer>
-        </div>
-</body>
-
-</html>
