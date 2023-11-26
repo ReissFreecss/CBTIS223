@@ -156,6 +156,5 @@ namespace CBTIS223_v2.Controllers
                 return data;
             }
         }
-
     }
 }
