@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @{
-
     ViewBag.Title = "Documentos";
     Layout = "_Layout";
 }
@@ -10,43 +9,36 @@
     <strong>@ViewBag.Error</strong>
 </div>
 <div style="color:green">
-    <!-- Muestra un mensaje de exito en color verde -->
+    <!-- Muestra un mensaje de éxito en color verde -->
     <strong>@ViewBag.Succesful</strong>
 </div>
 
-            <div class="row">
-                <div class="col-md-4 mt-4">
-                    <h4>Expedir documentos:</h4>
-                    <!--Descargar PDF -->
-                    <form method="post" asp-action="DescargarPDF" asp-controller="PDF">
+<div class="row justify-content-center">
+    <div class="col-md-4 mt-4">
+        <h4>Expedir documentos:</h4>
+        <!-- Descargar PDF -->
+        <form method="post" asp-action="DescargarPDF" asp-controller="PDF">
 
-                        <h5>Ingresa número de control:</h5>
-                        <input type="text" class="form-control mb-4" name="idEstudiante" pattern="\d{14}" placeholder="Ej. 20330051420002" required>
-                        <h5>Tipo:</h5>
-                        <select id="Selector" name="SelectorSP" class="form-select mb-4">
-                            <option value="Servicio">Servicio Social</option>
-                            <option value="Practicas">Prácticas Profesional</option>
-                        </select>
-                        <h5>Tramite:</h5>
-                        <select id="Selector" name="SelectoAL" class="form-select mb-4">
-                            <option value="Aceptacion">Carta de aceptación</option>
-                            <option value="Liberacion">Carta de liberación</option>
-                        </select>
+            <h5>Ingresa número de control:</h5>
+            <input type="text" class="form-control mb-4" name="idEstudiante" pattern="\d{14}" placeholder="Ej. 20330051420002" required>
+            <h5>Tipo:</h5>
+            <select id="Selector" name="SelectorSP" class="form-select mb-4">
+                <option value="Servicio">Servicio Social</option>
+                <option value="Practicas">Prácticas Profesionales</option>
+            </select>
+            <h5>Trámite:</h5>
+            <select id="Selector" name="SelectoAL" class="form-select mb-4">
+                <option value="Aceptacion">Carta de aceptación</option>
+                <option value="Liberacion">Carta de liberación</option>
+            </select>
 
-                        <h5>No. de Constancia: </h5>
-                        <input type="text" class="form-control mb-4" name="noConstancia"  required>
+            <h5>No. de Constancia: </h5>
+            <input type="text" class="form-control mb-4" name="noConstancia" required>
 
+            <h5>Iniciales: </h5>
+            <input type="text" class="form-control mb-4" name="Iniciales" required>
 
-                        <h5>Iniciales: </h5>
-                        <input type="text" class="form-control mb-4" name="Iniciales" required>
-
-                        <button class="btn w-25 btnclr button-row" type="submit">Descargar PDF</button>
-                    </form>
-                </div>
-                <!--Visor PDF  <embed src="@Url.Action("DescargarPDF", "PDF")"+ "?idEstudiante=" + idEstudiante width="100%" height="500" type="application/pdf"/>-->
-                <div class="pdf-container col-md-8">
-                    <iframe id="pdf" width="100%" height="500" frameborder="0">
-
-                    </iframe>
-                </div>
-            </div>
+            <button class="btn w-25 btnclr button-row" type="submit">Descargar PDF</button>
+        </form>
+    </div>
+</div>
