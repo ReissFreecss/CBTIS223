@@ -43,7 +43,7 @@ namespace CBTIS223_v2.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Root, jefePra, ofPra, jefeDep")]
+        [Authorize(Roles = "Root, jefeVinc, jefeDep, ofPrac")]
         public IActionResult EstadisticasPra()
         {
             return View();
